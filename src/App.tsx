@@ -4,9 +4,12 @@ import { theme } from "./theme/theme";
 import { Wrapper } from "./components/global/wrapper/Wrapper";
 import "@fontsource/jura";
 import "@fontsource/inter";
+import { UserContextProvider } from "./provider/user/UserContext";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
-    <Wrapper />
+    <UserContextProvider>
+      <Wrapper />
+    </UserContextProvider>
   </ChakraProvider>
 );

@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { CartIcon } from "../../../icons/CartIcon";
 import { HomeIcon } from "../../../icons/HomeIcon";
 import { UserIcon } from "../../../icons/UserIcon";
+import { useUserContext } from "../../../provider/user/UserContext";
 import { PageContainer } from "../../shared/containers/PageContainer";
 import { ActiveLinkIndicator } from "./ActiveLinkIndicator";
 import { Navitem } from "./Navitem";
@@ -12,6 +13,8 @@ export const Navbar = () => {
   const [homeIconColor, setHomeIconColor] = useState<string>("white");
 
   const { pathname } = useLocation();
+
+  const { login, logout, isLoggedIn } = useUserContext();
 
   return (
     <PageContainer>
@@ -46,19 +49,24 @@ export const Navbar = () => {
             <Navitem text="Inventory" location="/inventory" />
           </Flex>
           <Flex align="center" gap="31px">
-            {/* <Flex
-              h="42px"
-              w="42px"
-              align="center"
-              justify="center"
-              border="1px solid #BA74F8"
-              cursor="pointer"
-              borderRadius="50%"
-              _hover={{ bgColor: "brandPrimary" }}
-            >
-              <UserIcon />
-            </Flex> */}
-            <Button>Connect Wallet</Button>
+            {isLoggedIn && (
+              <Flex
+                h="42px"
+                w="42px"
+                align="center"
+                justify="center"
+                border="1px solid #BA74F8"
+                cursor="pointer"
+                borderRadius="50%"
+                _hover={{ bgColor: "brandPrimary" }}
+                onClick={() => logout()}
+              >
+                <UserIcon />
+              </Flex>
+            )}
+            {!isLoggedIn && (
+              <Button onClick={() => login()}>Connect Wallet</Button>
+            )}
             <Flex align="center" gap="12px">
               <CartIcon cursor="pointer" />
               <Text fontFamily="inter" fontSize="14px" fontWeight="600">

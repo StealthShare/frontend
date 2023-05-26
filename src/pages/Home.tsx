@@ -1,7 +1,8 @@
-import { Button, Flex } from "@chakra-ui/react";
 import React from "react";
 import { PageContainer } from "../components/shared/containers/PageContainer";
+import { useUserContext } from "../provider/user/UserContext";
 
 export const Home = () => {
-  return <PageContainer>Home</PageContainer>;
+  const user = useUserContext();
+  return <PageContainer>{user.address}</PageContainer>;
 };

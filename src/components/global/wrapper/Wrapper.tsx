@@ -14,7 +14,7 @@ import { SocialBanner } from "../socialBanner/SocialBanner";
 export const Wrapper = () => {
   const { setColorMode } = useColorMode();
 
-  useEffect(() => setColorMode("dark"), []);
+  useEffect(() => setColorMode("dark"), [setColorMode]);
 
   const pages = [
     {
@@ -36,7 +36,7 @@ export const Wrapper = () => {
   ].map((element, index) => ({ ...element, id: `${element.path}_${index}` }));
 
   return (
-    <Flex flexWrap="wrap" minH="100vh" flexDir="column">
+    <Flex flexWrap="wrap" minH="100vh" flexDir="column" zIndex="100">
       <BrowserRouter>
         <ScrollToTop>
           <BgPattern />
