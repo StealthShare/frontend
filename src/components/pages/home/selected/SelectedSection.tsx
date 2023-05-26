@@ -1,5 +1,7 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import React from "react";
+import { Link } from "react-router-dom";
+import { ArrowRightIcon } from "../../../../icons/ArrowRightIcon";
 import { PageContainer } from "../../../shared/containers/PageContainer";
 import { FileItem } from "../../../shared/FileItem";
 import { HeadingSmall } from "../../../shared/HeadingSmall";
@@ -8,7 +10,15 @@ export const SelectedSection = () => {
   return (
     <Flex flexDir="column" gap="30px" zIndex="1">
       <PageContainer>
-        <HeadingSmall text="Selected for you" />
+        <Flex justify="space-between" align="center">
+          <HeadingSmall text="Selected for you" />
+          <Link to="/marketplace">
+            <Flex fontSize="16px" fontFamily="Inter" color="white" gap="8px">
+              <Text>Go to the marketplace</Text>
+              <ArrowRightIcon />
+            </Flex>
+          </Link>
+        </Flex>
       </PageContainer>
       <Flex
         gap="17px"
