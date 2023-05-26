@@ -3,6 +3,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "./theme/theme";
 import { Wrapper } from "./components/global/wrapper/Wrapper";
 import "@fontsource/jura";
+import "@fontsource/inter";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
