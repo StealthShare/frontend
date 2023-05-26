@@ -33,12 +33,14 @@ export const Sell = () => {
               cursor="pointer"
               bgColor="rgba(0, 0, 0, 0.25)"
               borderRadius="8px"
-              _hover={{ bgColor: "rgba(0, 0, 0, 0.1)" }}
+              _hover={{ bgColor: "rgba(10, 10, 10, 0.25)" }}
               maxW="500px"
               maxH="300px"
               minW="500px"
               minH="300px"
               overflow="auto"
+              align={files !== null ? "flex-start" : "center"}
+              justify="center"
             >
               {files === null && <Text>Drop files here</Text>}
               {files !== null && (
