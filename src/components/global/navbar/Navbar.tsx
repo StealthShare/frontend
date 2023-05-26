@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { CartIcon } from '../../../icons/CartIcon';
 import { HomeIcon } from '../../../icons/HomeIcon';
 import { UserIcon } from '../../../icons/UserIcon';
+import { useCartContext } from '../../../provider/cart/CartContext';
 import { CartTooltip } from '../../pages/cart/CartTooltip/cartTooltip';
 import { PageContainer } from '../../shared/containers/PageContainer';
 import { ActiveLinkIndicator } from './ActiveLinkIndicator';
@@ -13,6 +14,7 @@ import { Navitem } from './Navitem';
 export const Navbar = () => {
   const [homeIconColor, setHomeIconColor] = useState<string>('white');
 
+  const { cartData } = useCartContext()
   const { pathname } = useLocation();
 
   return (
@@ -48,7 +50,7 @@ export const Navbar = () => {
               <CartTooltip/>
               <CartIcon cursor="pointer" />
               <Text fontFamily="inter" fontSize="14px" color="white" fontWeight="600">
-                $431.21
+                ${cartData.map(i => i.price).reduce((a, b) => a + b)}.00
               </Text>
             </Flex></Link>
           </Flex>
