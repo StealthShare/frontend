@@ -3,6 +3,7 @@ import { colors } from "./colors";
 import { ButtonStyle } from "./components/buttonStyle";
 import { CheckboxStyle } from "./components/checkboxStyle";
 import { InputStyle } from "./components/inputStyle";
+import { SelectStyle } from "./components/selectStyle";
 import { globalStyles } from "./global";
 
 export const theme = extendTheme({
@@ -10,7 +11,8 @@ export const theme = extendTheme({
   components: {
     Button: ButtonStyle,
     Checkbox: CheckboxStyle,
-    Input: InputStyle
+    Input: InputStyle,
+    Select: SelectStyle
   },
   config: {
     initialColorMode: "dark",

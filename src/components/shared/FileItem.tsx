@@ -4,13 +4,14 @@ import { BookmarkIcon } from "../../icons/BookmarkIcon";
 import { EyeIcon } from "../../icons/EyeIcon";
 import { currencyFormatter } from "../../utils/currencyFormatter";
 
-interface IFileItem {
+export interface IFileItem {
   category: string;
   imageUrl: string;
   name: string;
   price: number;
   size: number;
   peers: number;
+  isSmall?: boolean;
 }
 
 export const FileItem: FC<IFileItem> = ({
@@ -19,12 +20,13 @@ export const FileItem: FC<IFileItem> = ({
   name,
   price,
   size,
-  peers
+  peers,
+  isSmall
 }) => {
   return (
     <Flex
       bgGradient="linear(180deg, #282939 0%, rgba(40, 41, 57, 0.51) 100%)"
-      p="17px 15px"
+      p={isSmall ? "13px 11px" : "17px 15px"}
       borderRadius="17px"
       fontFamily="Inter"
       flexDir="column"
@@ -36,9 +38,16 @@ export const FileItem: FC<IFileItem> = ({
           {category}
         </Text>
       </Flex>
-      <Image src={imageUrl} minW="268px" minH="200px" borderRadius="8px" />
-      <Text fontSize="16px" fontWeight="700">
-        {name}
+      <Image
+        src={imageUrl}
+        minW={isSmall ? "200px" : "268px"}
+        minH={isSmall ? "150px" : "200px"}
+        maxW={isSmall ? "200px" : "268px"}
+        maxH={isSmall ? "150px" : "200px"}
+        borderRadius="8px"
+      />
+      <Text fontSize={isSmall ? "14px" : "16px"} fontWeight="700">
+        {name.length > 27 ? name.slice(0, 27) + "..." : name}
       </Text>
       <Text mt="5px" fontSize="14px" fontWeight="600" color="brandPrimary">
         {currencyFormatter(price)}
