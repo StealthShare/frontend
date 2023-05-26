@@ -27,7 +27,7 @@ export const Navbar = () => {
         <Link to="/">
           <Image
             src="/assets/icons/logo.svg"
-            mx="-16px"
+            transform="translateX(-16px)"
             mt="-19px"
             mb="-19px"
           />

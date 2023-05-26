@@ -14,7 +14,6 @@ export const PageContainer: FC<IPageContainerProps> = ({ children }) => {
       position="relative"
       flexDir="column"
       mx="auto"
-      overflow="hidden"
     >
       {children}
     </Flex>
