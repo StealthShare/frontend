@@ -41,7 +41,14 @@ export const Wrapper = () => {
   ].map((element, index) => ({ ...element, id: `${element.path}_${index}` }));
 
   return (
-    <Flex flexWrap="wrap" minH="100vh" flexDir="column" zIndex="100">
+    <Flex
+      flexWrap="wrap"
+      minH="100vh"
+      flexDir="column"
+      zIndex="100"
+      maxW="100vw"
+      overflow="hidden"
+    >
       <BrowserRouter>
         <ScrollToTop>
           <BgPattern />

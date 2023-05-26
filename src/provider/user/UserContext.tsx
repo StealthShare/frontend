@@ -81,7 +81,9 @@ export const useUserContext = () => {
   const context = useContext(UserContext);
 
   if (!context) {
-    throw new Error('`useUserProvider` hook cannot be used outside of a `UserProvider`!');
+    throw new Error(
+      "`useUserContext` hook cannot be used outside of a `UserContextProvider`!"
+    );
   }
   return context;
 };

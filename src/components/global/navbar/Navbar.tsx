@@ -18,7 +18,16 @@ export const Navbar = () => {
     <PageContainer>
       <Flex zIndex="100" justify="space-between" align="center" py={{ base: '15px', md: '49px' }}>
         <Link to="/">
+<<<<<<< HEAD
           <Image src="/assets/icons/logo.svg" mx="-16px" mt="-19px" mb="-19px" />
+=======
+          <Image
+            src="/assets/icons/logo.svg"
+            transform="translateX(-16px)"
+            mt="-19px"
+            mb="-19px"
+          />
+>>>>>>> acc79eab706ca80b4df584ae18096c0dfdd4c1ec
         </Link>
         <Flex gap="37px" align="center">
           <Link to="/" style={{ position: 'relative' }}>
