@@ -1,11 +1,17 @@
 import { extendTheme } from "@chakra-ui/react";
 import { colors } from "./colors";
 import { ButtonStyle } from "./components/buttonStyle";
+import { CheckboxStyle } from "./components/checkboxStyle";
+import { InputStyle } from "./components/inputStyle";
 import { globalStyles } from "./global";
 
 export const theme = extendTheme({
   colors: colors,
-  components: { Button: ButtonStyle },
+  components: {
+    Button: ButtonStyle,
+    Checkbox: CheckboxStyle,
+    Input: InputStyle
+  },
   config: {
     initialColorMode: "dark",
     useSystemColorMode: false
