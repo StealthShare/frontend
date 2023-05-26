@@ -6,11 +6,11 @@ export const theme = extendTheme({
   colors: colors,
   components: {},
   config: {
-    initialColorMode: "light",
+    initialColorMode: "dark",
     useSystemColorMode: false
   },
   fonts: {
-    body: `Inter`
+    body: `Jura`
   },
   styles: {
     ...globalStyles
