@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { CartIcon } from '../../../icons/CartIcon';
 import { HomeIcon } from '../../../icons/HomeIcon';
 import { UserIcon } from '../../../icons/UserIcon';
+import { CartTooltip } from '../../pages/cart/CartTooltip/cartTooltip';
 import { PageContainer } from '../../shared/containers/PageContainer';
 import { ActiveLinkIndicator } from './ActiveLinkIndicator';
 import { ConnectButton } from './ConnectButton';
@@ -43,7 +44,8 @@ export const Navbar = () => {
           </Flex>
           <Flex align="center" gap="31px">
             <ConnectButton />
-            <Link  to="/cart"><Flex align="center" gap="12px">
+            <Link  to="/cart"><Flex align="center" pos="relative" role="group" gap="12px">
+              <CartTooltip/>
               <CartIcon cursor="pointer" />
               <Text fontFamily="inter" fontSize="14px" color="white" fontWeight="600">
                 $431.21
