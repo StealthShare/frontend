@@ -26,9 +26,7 @@ export const Home = () => {
           bgColor="brandPrimary"
         />
       </Box>
-      <PageContainer>
-        <SelectedSection />
-      </PageContainer>
+      <SelectedSection />
     </Flex>
   );
 };

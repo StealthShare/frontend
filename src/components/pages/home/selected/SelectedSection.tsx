@@ -1,15 +1,20 @@
 import { Flex } from "@chakra-ui/react";
 import React from "react";
+import { PageContainer } from "../../../shared/containers/PageContainer";
 import { FileItem } from "../../../shared/FileItem";
 import { HeadingSmall } from "../../../shared/HeadingSmall";
 
 export const SelectedSection = () => {
   return (
-    <Flex flexDir="column" gap="30px" mr="-10vw">
-      <HeadingSmall text="Selected for you" />
+    <Flex flexDir="column" gap="30px" zIndex="1">
+      <PageContainer>
+        <HeadingSmall text="Selected for you" />
+      </PageContainer>
       <Flex
         gap="17px"
         overflowY="auto"
+        maxW="100vw"
+        overflow="auto"
         css={{
           "&::-webkit-scrollbar": {
             width: "4px"
@@ -22,6 +27,7 @@ export const SelectedSection = () => {
           }
         }}
       >
+        <Flex minW="calc((100vw - 1200px) / 2 - 17px)" h="100px"></Flex>
         <FileItem
           category="Games"
           imageUrl="https://www.picsum.photos/268/201"
@@ -70,6 +76,7 @@ export const SelectedSection = () => {
           size={1.2}
           peers={213}
         />
+        <Flex minW="calc((100vw - 1200px) / 2 - 17px)" h="100px"></Flex>
       </Flex>
     </Flex>
   );
