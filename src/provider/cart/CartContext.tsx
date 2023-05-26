@@ -6,46 +6,61 @@ import { cartReducer } from './cartReducer';
 import { ethers } from 'ethers';
 
 interface IUserContext {
-  cartData: any[];
+  cartData: any[] | null;
+  deleteItemByAddress: (address: string) => void
 }
 
 const initValue: IUserContext = {
   cartData: [],
+  deleteItemByAddress: (address: string) => {}
 };
 
 export interface CartItem {
   amount: number;
   address: string;
   imageUrl: string;
-  category: string,
-  name: string,
-  price: number,
-  size: number
+  category: string;
+  name: string;
+  price: number;
+  size: number;
 }
 
 const CartContext = createContext(initValue);
 
 export const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [{}, dispatchUser] = useReducer(cartReducer, initValue);
-  const [cartData, setCartData] = useLocalStorage<CartItem[]>('CART', [{
-    amount: 1,
-    address: "",
-    imageUrl: "/assets/samples/1.png",
-    category: "Gaming",
-    name: "Some shit",
-    price: 22,
-    size: 1.2
-  },{
-    amount: 2,
-    imageUrl: "/assets/samples/1.png",
-    address: "",
-    category: "Something",
-    name: "Elo elo 320",
-    price: 40,
-    size: 0.1
-  }]);
+  const [cartData, setCartData] = useLocalStorage<any[] | null>('CART', [
+    {
+      amount: 1,
+      address: '12',
+      imageUrl: '/assets/samples/1.png',
+      category: 'Gaming',
+      name: 'Some shit',
+      price: 22,
+      size: 1.2,
+    },
+    {
+      amount: 1,
+      imageUrl: '/assets/samples/1.png',
+      address: '34',
+      category: 'Something',
+      name: 'Elo elo 320',
+      price: 40,
+      size: 0.1,
+    },
+  ]);
 
-  return <CartContext.Provider value={{ cartData }}>{children}</CartContext.Provider>;
+  const deleteItemByAddress = (address: string) => {
+    if(cartData?.length == 1) {
+      setCartData(null)
+    } else {
+      setCartData(cartData?.filter((item) => item.address != address))
+    }
+  
+    
+  }
+
+  return <CartContext.Provider value={{ cartData, deleteItemByAddress }}>{children}</CartContext.Provider>;
 };
 
 export const useCartContext = () => {

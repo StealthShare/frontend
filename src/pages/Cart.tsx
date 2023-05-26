@@ -8,20 +8,20 @@ import { useCartContext } from '../provider/cart/CartContext';
 import { useUserContext } from '../provider/user/UserContext';
 
 export const Cart = () => {
-  const { cartData } = useCartContext();
+  const { cartData, deleteItemByAddress } = useCartContext();
 
   return (
     <PageContainer>
       <Heading text={'Your shopping cart'} />
       <>
-        {cartData.length > 0 ? (
+        {cartData ? (
           <Flex mt="40px" flexDir="column" gap="20px">
             <Flex justifyContent="space-between">
               <Flex fontFamily="Inter" gap="20px">
                 <Box fontSize="16px">
                   Items in cart:{' '}
                   <Box display="inline" fontWeight="bold">
-                    {cartData.length}
+                    {cartData?.length}
                   </Box>
                 </Box>
                 <Box cursor="pointer" color="brandPrimary" textDecor="underline">
@@ -73,6 +73,7 @@ export const Cart = () => {
                         </Flex>
                       </Flex>
                       <Flex align="center" gap="50px">
+                        <Flex align="center" justify="center" cursor="pointer" boxSize='40px' borderRadius="50%" _hover={{bg: "rgba(255,255,255,0.2)"}} onClick={() => deleteItemByAddress(item.address)}><Image src="/assets/icons/trashcan.svg"/></Flex>
                         <Flex align="center" gap="10px">
                         <Box bg="rgba(255, 255, 255, 0.17)" border="1px solid"  borderRadius="4px" padding="2px 4px" borderColor="rgba(255, 255, 255, 0.2)">$</Box>
                         <Box fontFamily="Inter">{item.price.toFixed(2)}</Box>

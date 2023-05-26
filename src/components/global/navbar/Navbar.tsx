@@ -50,7 +50,7 @@ export const Navbar = () => {
               <CartTooltip/>
               <CartIcon cursor="pointer" />
               <Text fontFamily="inter" fontSize="14px" color="white" fontWeight="600">
-                ${cartData.map(i => i.price).reduce((a, b) => a + b)}.00
+                ${cartData ? cartData.map(i => i.price).reduce((a, b) => a + b) : 0}.00
               </Text>
             </Flex></Link>
           </Flex>
