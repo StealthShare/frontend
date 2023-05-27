@@ -1,6 +1,6 @@
-import { Box, Flex, Grid, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Grid, Image, Spinner, Text } from "@chakra-ui/react";
 import axios from "axios";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { API_URL } from "../../constants";
 import { BookmarkIcon } from "../../icons/BookmarkIcon";
 import { CartIcon } from "../../icons/CartIcon";
@@ -33,9 +33,11 @@ export const FileItem: FC<IFileItem> = ({
   token,
   download
 }) => {
+  const [loading, setLoading] = useState<boolean>(false);
   const { jwt } = useUserContext();
   const { addItemToCart } = useCartContext();
   const handleDownload = async () => {
+    setLoading(true);
     const res2 = await axios.get(`${API_URL}/${token}/download`, {
       headers: {
         "x-access-token": jwt
@@ -53,6 +55,7 @@ export const FileItem: FC<IFileItem> = ({
       downloadLink.href = `data:image/png;charset:utf-8;base64,${res2.data.files}`;
       downloadLink.download = fileName;
       downloadLink.click();
+      setLoading(false);
     };
     fr.readAsDataURL(blob);
   };
@@ -138,17 +141,19 @@ export const FileItem: FC<IFileItem> = ({
         <Flex
           right="0px"
           pos="absolute"
-          display="none"
+          display={loading ? "block" : "none"}
           padding="10px"
           transform="translate(10px,-10px)"
-          bg="#282939"
-          _groupHover={{ display: "block", bg: "#2d2f3b" }}
+          _groupHover={{ display: "block" }}
         >
           <Flex
             alignItems="center"
             border="1px solid"
             boxSize="44px"
             borderColor="brandPrimary"
+            bgColor={loading ? "brandPrimary" : "none"}
+            opacity={loading ? "0.5" : "1"}
+            cursor={loading ? "default" : "pointer"}
             justify="center"
             borderRadius="4px"
             _hover={{ bg: "brandPrimary" }}
@@ -168,7 +173,11 @@ export const FileItem: FC<IFileItem> = ({
             }
           >
             {download ? (
-              <DownloadIcon color="white" />
+              loading ? (
+                <Spinner />
+              ) : (
+                <DownloadIcon color="white" />
+              )
             ) : (
               <Image
                 transform="translateX(-1px)"
