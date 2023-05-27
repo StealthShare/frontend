@@ -52,6 +52,16 @@ export const SelectedSection = () => {
           imageUrl="https://www.picsum.photos/268/201"
           name="Za szybcy za wściekli 2024"
           price={21}
+          isSmall={true}
+          size={1.2}
+          peers={213}
+        />
+        <FileItem
+          category="Games"
+          imageUrl="https://www.picsum.photos/268/201"
+          name="Za szybcy za wściekli 2024"
+          price={21}
+          isSmall={true}
           size={1.2}
           peers={213}
         />
@@ -61,6 +71,7 @@ export const SelectedSection = () => {
           name="Za szybcy za wściekli 2024"
           price={21}
           size={1.2}
+          isSmall={true}
           peers={213}
         />
         <FileItem
@@ -69,6 +80,7 @@ export const SelectedSection = () => {
           name="Za szybcy za wściekli 2024"
           price={21}
           size={1.2}
+          isSmall={true}
           peers={213}
         />
         <FileItem
@@ -77,6 +89,7 @@ export const SelectedSection = () => {
           name="Za szybcy za wściekli 2024"
           price={21}
           size={1.2}
+          isSmall={true}
           peers={213}
         />
         <FileItem
@@ -85,14 +98,7 @@ export const SelectedSection = () => {
           name="Za szybcy za wściekli 2024"
           price={21}
           size={1.2}
-          peers={213}
-        />
-        <FileItem
-          category="Games"
-          imageUrl="https://www.picsum.photos/268/201"
-          name="Za szybcy za wściekli 2024"
-          price={21}
-          size={1.2}
+          isSmall={true}
           peers={213}
         />
         <Flex minW="calc((100vw - 1200px) / 2 - 17px)" h="100px"></Flex>

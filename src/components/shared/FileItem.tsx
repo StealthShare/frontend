@@ -1,9 +1,9 @@
-import { Box, Flex, Image, Skeleton, Text } from "@chakra-ui/react";
-import React, { FC } from "react";
-import { BookmarkIcon } from "../../icons/BookmarkIcon";
-import { EyeIcon } from "../../icons/EyeIcon";
-import { useListingContext } from "../../provider/listings/ListingsContext";
-import { currencyFormatter } from "../../utils/currencyFormatter";
+import { Box, Flex, Grid, Image, Text } from '@chakra-ui/react';
+import React, { FC } from 'react';
+import { BookmarkIcon } from '../../icons/BookmarkIcon';
+import { CartIcon } from '../../icons/CartIcon';
+import { EyeIcon } from '../../icons/EyeIcon';
+import { currencyFormatter } from '../../utils/currencyFormatter';
 
 export interface IFileItem {
   category: string;
@@ -15,71 +15,77 @@ export interface IFileItem {
   isSmall?: boolean;
 }
 
-export const FileItem: FC<IFileItem> = ({
-  category,
-  imageUrl,
-  name,
-  price,
-  size,
-  peers,
-  isSmall
-}) => {
-  const { loading, listings } = useListingContext();
+export const FileItem: FC<IFileItem> = ({ category, imageUrl, name, price, size, peers, isSmall }) => {
   return (
-    <>
-      {loading ? (
-        <Skeleton
-          h={isSmall ? "270px" : "360px"}
-          minW={isSmall ? "220px" : "300px"}
-          borderRadius="17px"
-        />
-      ) : (
+    <Flex
+      bg="#282939"
+      _hover={{ bg: '#2d2f3b' }}
+      cursor="pointer"
+      p={isSmall ? '0' : '22px 25px'}
+      borderRadius="8px"
+      fontFamily="Inter"
+      pos="relative"
+      flexDir="column"
+      gap="14px"
+      role={'group'}
+    >
+      <Box
+        bgPos="center"
+        bgSize="cover"
+        w="100%"
+        paddingBottom="100%"
+        bgImage={imageUrl}
+        minW={'220px'}
+        maxW={isSmall ? 'auto' : '268px'}
+        maxH={isSmall ? 'auto' : '200px'}
+        borderRadius="8px"
+        pos="relative"
+      >
         <Flex
-          bgGradient="linear(180deg, #282939 0%, rgba(40, 41, 57, 0.51) 100%)"
-          p={isSmall ? "13px 11px" : "17px 15px"}
-          borderRadius="17px"
-          fontFamily="Inter"
-          flexDir="column"
-          gap="12px"
+          justify="flex-end"
+          align="center"
+          padding="0px 16px"
+          pos="absolute"
+          w="100%"
+          h="25%"
+          paddingTop="20px"
+          bg="linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(0,0,0,1) 100%)"
+          bottom="0px"
         >
           <Flex gap="7px" align="center">
-            <BookmarkIcon />
-            <Text fontSize="10px" fontWeight="500" color="textSecondary">
+            <Box borderRadius="2px" paddingX="6px" fontSize="10px" fontWeight="500" bgColor="brandPrimary">
               {category}
-            </Text>
-          </Flex>
-          <Image
-            src={imageUrl}
-            minW={isSmall ? "200px" : "268px"}
-            minH={isSmall ? "150px" : "200px"}
-            maxW={isSmall ? "200px" : "268px"}
-            maxH={isSmall ? "150px" : "200px"}
-            borderRadius="8px"
-          />
-          <Text fontSize={isSmall ? "14px" : "16px"} fontWeight="700">
-            {name.length > 27 ? name.slice(0, 27) + "..." : name}
-          </Text>
-          <Text mt="5px" fontSize="14px" fontWeight="600" color="brandPrimary">
-            {currencyFormatter(price)}
-          </Text>
-          <Box my="5px" h="1px" w="100%" bgColor="#383A56" />
-          <Flex justify="space-between" align="center">
-            <EyeIcon />
-            <Flex
-              gap="19px"
-              align="center"
-              fontSize="12px"
-              color="textSecondary"
-            >
-              <Text fontWeight="600">{size} GB</Text>
-              <Flex fontWeight="600">
-                <Text fontWeight="300">Peers:&nbsp;</Text>
-                <Text>{peers}</Text>
-              </Flex>
-            </Flex>
+            </Box>
+            <Box borderRadius="2px" paddingX="6px" fontSize="10px" fontWeight="500" bgColor="gray">
+              {1.2}GB
+            </Box>
           </Flex>
         </Flex>
-      )}
-    </>
+      </Box>
+      <Grid pos="relative" templateColumns="1fr" margin="16px" marginTop="0px" gap="20px">
+        <Flex flexDir="column" pos="relative" w="100%" overflow="hidden">
+          <Text maxW="100%" whiteSpace="nowrap" fontSize={isSmall ? '14px' : '16px'} fontWeight="700">
+            {name.length > 27 ? name.slice(0, 27) + '...' : name}
+          </Text>
+          <Text mt="0px" fontSize="16px" fontWeight="500" color="brandPrimary">
+            {currencyFormatter(price)}
+          </Text>
+        </Flex>
+        <Flex  right="0px"
+            pos="absolute" display='none' padding="10px" transform="translate(10px,-10px)" bg="#282939" _groupHover={{ display: "block",  bg: '#2d2f3b' }}>
+          <Flex
+            alignItems="center"
+            border="1px solid"
+            boxSize="44px"
+            borderColor="brandPrimary"
+            justify="center"
+            borderRadius="4px"
+            _hover={{ bg: 'brandPrimary' }}
+          >
+            <Image transform="translateX(-1px)" src="/assets/icons/shopping-cart.svg" />
+          </Flex>
+        </Flex>
+      </Grid>
+    </Flex>
   );
 };
