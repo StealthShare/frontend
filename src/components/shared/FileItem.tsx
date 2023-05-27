@@ -20,6 +20,8 @@ export interface IFileItem {
   isSmall?: boolean;
   token?: string;
   download?: boolean;
+  address: string;
+  _id: string;
 }
 
 export const FileItem: FC<IFileItem> = ({
@@ -31,7 +33,9 @@ export const FileItem: FC<IFileItem> = ({
   peers,
   isSmall,
   token,
-  download
+  download,
+  address,
+  _id
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const { jwt } = useUserContext();
@@ -163,12 +167,13 @@ export const FileItem: FC<IFileItem> = ({
                 : () =>
                     addItemToCart({
                       amount: 1,
-                      address: "0x000",
+                      address: address,
                       imageUrl: imageUrl,
                       category: category,
                       name: name,
                       price: price,
-                      size: size
+                      size: size,
+                      _id: _id
                     })
             }
           >

@@ -37,6 +37,7 @@ export interface CartItem {
   name: string;
   price: number;
   size: number;
+  _id: string;
 }
 
 const CartContext = createContext(initValue);
@@ -68,12 +69,10 @@ export const CartContextProvider = ({
     if (
       cartData !== null &&
       cartData.find((data: any) => {
-        return data.address === item.address;
+        return data._id === item._id;
       })
     ) {
-      const index = cartData
-        .map((data: any) => data.address)
-        .indexOf(item.address);
+      const index = cartData.map((data: any) => data._id).indexOf(item._id);
       var pom = cartData.at(index);
       pom.amount += 1;
       setCartData([
@@ -94,35 +93,33 @@ export const CartContextProvider = ({
       setCartData(null);
       setPrice(0);
     } else {
-      const item = cartData?.filter((item) => item.address === address)[0];
+      const item = cartData?.filter((item) => item._id === address)[0];
       setCartData(cartData?.filter((item) => item !== address));
       setPrice((prevState) => prevState - item.price * item.amount);
     }
   };
 
   const removeOneByAddress = (address: string) => {
-    const item = cartData!.filter((item) => item.address === address)[0];
+    const item = cartData!.filter((item) => item._id === address)[0];
     console.log(item.amount);
 
     item.amount -= 1;
     setPrice((prevState) => prevState - item.price);
-    const index = cartData
-      ?.map((data: any) => data.address)
-      .indexOf(item.address);
+    const index = cartData?.map((data: any) => data._id).indexOf(item._id);
     if (item.amount === 0) {
       if (cartData?.length == 1) {
         setCartData(null);
         setPrice(0);
       } else {
         setCartData([
-          ...cartData!.slice(0, index! - 1),
+          ...cartData!.slice(0, index),
           ...cartData!.slice(index! + 1)
         ]);
       }
     } else {
       if (cartData!.length)
         setCartData([
-          ...cartData!.slice(0, index! - 1),
+          ...cartData!.slice(0, index),
           item,
           ...cartData!.slice(index! + 1)
         ]);

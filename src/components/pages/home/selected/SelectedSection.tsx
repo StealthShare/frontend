@@ -63,6 +63,8 @@ export const SelectedSection = () => {
                 size={1.2}
                 peers={213}
                 token={item.token}
+                address={item._id}
+                _id={item._id}
               />
             );
           })}

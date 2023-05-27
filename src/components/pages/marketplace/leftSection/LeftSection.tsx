@@ -48,6 +48,8 @@ export const LeftSection: FC<ILeftSectionProps> = ({
                 peers={213}
                 download={download}
                 token={item.token}
+                address={item._id}
+                _id={item._id}
               />
             );
           })}
