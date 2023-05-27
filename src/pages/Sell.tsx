@@ -38,7 +38,7 @@ export const Sell = () => {
 
         setMintedTokenAddress(receipt.contractAddress);
 
-        setStage(ListingStage.FILL_LISTING_DATA);
+        setStage(ListingStage.UPLOAD_FILES);
         setLoading(false);
       } catch (error) {
         setLoading(false);
@@ -50,7 +50,7 @@ export const Sell = () => {
     if (tokenName.length > 5 && tokenDescription.length > 10 && tokenSupply > 0) {
       setStage(ListingStage.MINT_TOKEN);
     } else {
-      setStage(ListingStage.FILL_TOKEN_DATA);
+      // setStage(ListingStage.FILL_TOKEN_DATA);
     }
   }, [tokenName, tokenDescription, tokenSupply]);
 
@@ -126,7 +126,7 @@ export const Sell = () => {
             )}
             {(stage == ListingStage.SELECT_FILES || stage == ListingStage.UPLOAD_FILES) && (
               <Flex>
-                <Button onClick={uploadFiles}>Upload files</Button>
+                <FileUpload mintedTokenAddress={mintedTokenAddress} setStage={setStage} loading={loading}/>
               </Flex>
             )}
             {(stage == ListingStage.FILL_LISTING_DATA || stage == ListingStage.LIST_ON_MARKETPLACE) && (
