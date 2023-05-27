@@ -14,6 +14,7 @@ import { ethers } from "ethers";
 interface IUserContext {
   cartData: any[] | null;
   deleteItemByAddress: (address: string) => void;
+  removeOneByAddress: (address: string) => void;
   clearCart: () => void;
   addItemToCart: (data: any) => void;
   price: number;
@@ -22,6 +23,7 @@ interface IUserContext {
 const initValue: IUserContext = {
   cartData: [],
   deleteItemByAddress: (address: string) => {},
+  removeOneByAddress: (address: string) => {},
   clearCart: () => {},
   addItemToCart: () => {},
   price: 0
@@ -98,9 +100,45 @@ export const CartContextProvider = ({
     }
   };
 
+  const removeOneByAddress = (address: string) => {
+    const item = cartData!.filter((item) => item.address === address)[0];
+    console.log(item.amount);
+
+    item.amount -= 1;
+    setPrice((prevState) => prevState - item.price);
+    const index = cartData
+      ?.map((data: any) => data.address)
+      .indexOf(item.address);
+    if (item.amount === 0) {
+      if (cartData?.length == 1) {
+        setCartData(null);
+        setPrice(0);
+      } else {
+        setCartData([
+          ...cartData!.slice(0, index! - 1),
+          ...cartData!.slice(index! + 1)
+        ]);
+      }
+    } else {
+      if (cartData!.length)
+        setCartData([
+          ...cartData!.slice(0, index! - 1),
+          item,
+          ...cartData!.slice(index! + 1)
+        ]);
+    }
+  };
+
   return (
     <CartContext.Provider
-      value={{ cartData, clearCart, deleteItemByAddress, addItemToCart, price }}
+      value={{
+        cartData,
+        clearCart,
+        deleteItemByAddress,
+        addItemToCart,
+        price,
+        removeOneByAddress
+      }}
     >
       {children}
     </CartContext.Provider>
