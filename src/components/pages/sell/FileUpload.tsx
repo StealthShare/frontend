@@ -1,19 +1,32 @@
 import { Flex, Text } from "@chakra-ui/react";
+import axios from "axios";
 import React, { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
+import { API_URL } from "../../../constants";
+import { useUserContext } from "../../../provider/user/UserContext";
 
 export const FileUpload = () => {
+  const { jwt } = useUserContext();
   const [files, setFiles] = useState(null);
   const [formData, setFormData] = useState<FormData>(new FormData());
-  
-  const handleChange = (incomingFiles: any) => {
+  const handleChange = async (incomingFiles: any) => {
     setFiles(incomingFiles);
     if (incomingFiles !== null) {
       const formData = new FormData();
       Array.from(incomingFiles).forEach((file: any) => {
         formData.append("file", file);
       });
-      console.log(formData.getAll("file"));
+      console.log("files", formData.getAll("file"));
+      const res = await axios.post(
+        `${API_URL}/${"0x6f07465bD94A4e12ee77905EB6477497f0AaBcA7"}/uploadFile`,
+        formData,
+        {
+          headers: {
+            "x-access-token": jwt,
+            "Content-Type": "multipart/form-data"
+          }
+        }
+      );
     }
   };
 
