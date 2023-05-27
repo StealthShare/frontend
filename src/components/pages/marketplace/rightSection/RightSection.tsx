@@ -12,10 +12,47 @@ interface IRightSectionProps {
   setActiveGrid: any;
 }
 
+export const categories = [
+  {
+    text: "All",
+    value: "all"
+  },
+  {
+    text: "Apps",
+    value: "apps"
+  },
+  {
+    text: "Audios",
+    value: "audios"
+  },
+  {
+    text: "Games",
+    value: "games"
+  },
+  {
+    text: "Videos",
+    value: "videos"
+  },
+  {
+    text: "Docs",
+    value: "docs"
+  },
+  {
+    text: "Mobile",
+    value: "mobile"
+  },
+  {
+    text: "Porn",
+    value: "porn"
+  }
+];
+
 export const RightSection: FC<IRightSectionProps> = ({
   activeGrid,
   setActiveGrid
 }) => {
+  const [activeCategory, setActiveCategory] = useState<string>("all");
+
   return (
     <Flex flexDir="column" gap="30px">
       <Flex justify="space-between" gap="9px">
@@ -49,14 +86,14 @@ export const RightSection: FC<IRightSectionProps> = ({
           Categories
         </Text>
         <Flex flexDir="column" gap="16px" fontFamily="Inter" fontSize="16px">
-          <CategoryItem text="All" />
-          <CategoryItem text="Apps" />
-          <CategoryItem text="Audios" />
-          <CategoryItem text="Games" />
-          <CategoryItem text="Videos" />
-          <CategoryItem text="Docs" />
-          <CategoryItem text="Mobile" />
-          <CategoryItem text="Porn" />
+          {categories.map((category: any) => (
+            <CategoryItem
+              key={category.value}
+              text={category.text}
+              active={activeCategory === category.value}
+              onClick={() => setActiveCategory(category.value)}
+            />
+          ))}
         </Flex>
       </Flex>
       <Box h="1px" w="100%" bgColor="#262626" />
