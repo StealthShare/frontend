@@ -1,25 +1,31 @@
-import { Box, Button, Flex, Grid, Input } from '@chakra-ui/react';
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { CurrentStage, ListingStage } from '../components/pages/sell/CurrentStage/currentStage';
-import { FileUpload } from '../components/pages/sell/FileUpload';
-import { PageContainer } from '../components/shared/containers/PageContainer';
-import { Heading } from '../components/shared/Heading';
-import { ethers } from 'ethers';
-import { MARKET_ABI } from '../abi/market';
-import { ERC1155_ABI } from '../abi/erc1155';
-import { FILE_TOKEN_BYTECODE } from '../constants/fileTokenBytecode';
-import { FILETOKEN_ABI } from '../abi/file';
-import { MARKET_ADDRESS } from '../constants';
+import { Box, Button, Flex, Grid, Input, Text } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { useEffect } from "react";
+import {
+  CurrentStage,
+  ListingStage
+} from "../components/pages/sell/CurrentStage/currentStage";
+import { FileUpload } from "../components/pages/sell/FileUpload";
+import { PageContainer } from "../components/shared/containers/PageContainer";
+import { Heading } from "../components/shared/Heading";
+import { ethers } from "ethers";
+import { MARKET_ABI } from "../abi/market";
+import { ERC1155_ABI } from "../abi/erc1155";
+import { FILE_TOKEN_BYTECODE } from "../constants/fileTokenBytecode";
+import { FILETOKEN_ABI } from "../abi/file";
+import { MARKET_ADDRESS } from "../constants";
+import { CustomInput } from "../components/shared/CustomInput";
 
 export const Sell = () => {
-  const [stage, setStage] = useState<ListingStage>(ListingStage.FILL_TOKEN_DATA);
+  const [stage, setStage] = useState<ListingStage>(
+    ListingStage.FILL_TOKEN_DATA
+  );
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [tokenName, setTokenName] = useState<string>('');
-  const [tokenDescription, setTokenDescription] = useState<string>('');
+  const [tokenName, setTokenName] = useState<string>("");
+  const [tokenDescription, setTokenDescription] = useState<string>("");
   const [tokenSupply, setTokenSupply] = useState<number>(1000);
-  const [mintedTokenAddress, setMintedTokenAddress] = useState<string>('');
+  const [mintedTokenAddress, setMintedTokenAddress] = useState<string>("");
   const [price, setPrice] = useState<number>(10);
 
   const mintToken = async () => {
@@ -30,9 +36,13 @@ export const Sell = () => {
 
         const singer = await provider.getSigner();
 
-        const factory = new ethers.ContractFactory(FILETOKEN_ABI, FILE_TOKEN_BYTECODE, singer);
+        const factory = new ethers.ContractFactory(
+          FILETOKEN_ABI,
+          FILE_TOKEN_BYTECODE,
+          singer
+        );
 
-        const tx: any = await factory.deploy('', tokenSupply);
+        const tx: any = await factory.deploy("", tokenSupply);
 
         const receipt = await tx.deploymentTransaction().wait(2);
 
@@ -47,7 +57,11 @@ export const Sell = () => {
   };
 
   useEffect(() => {
-    if (tokenName.length > 5 && tokenDescription.length > 10 && tokenSupply > 0) {
+    if (
+      tokenName.length > 5 &&
+      tokenDescription.length > 10 &&
+      tokenSupply > 0
+    ) {
       setStage(ListingStage.MINT_TOKEN);
     } else {
       // setStage(ListingStage.FILL_TOKEN_DATA);
@@ -74,13 +88,21 @@ export const Sell = () => {
 
       const market = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, signer);
 
-      const token = new ethers.Contract(mintedTokenAddress, ERC1155_ABI, signer);
+      const token = new ethers.Contract(
+        mintedTokenAddress,
+        ERC1155_ABI,
+        signer
+      );
 
       const tx = await token.setApprovalForAll(MARKET_ADDRESS, true);
 
       await tx.wait(2);
 
-      const tx2 = await market.placeListing(mintedTokenAddress, price, tokenSupply);
+      const tx2 = await market.placeListing(
+        mintedTokenAddress,
+        price,
+        tokenSupply
+      );
 
       await tx2.wait(2);
       setStage(ListingStage.FINISHED);
@@ -93,50 +115,76 @@ export const Sell = () => {
         <Flex h="100vh" flexDir="column" gap="40px">
           <Heading text="Sell files" />
           <Flex flexDir="column">
-            {(stage == ListingStage.FILL_TOKEN_DATA || stage == ListingStage.MINT_TOKEN) && (
-              <Flex flexDir="column">
-                <Box>Name</Box>
-                <Input
+            {(stage == ListingStage.FILL_TOKEN_DATA ||
+              stage == ListingStage.MINT_TOKEN) && (
+              <Flex flexDir="column" gap="20px" fontSize="18px">
+                <Flex flexDir="column" gap="8px">
+                <Text>Name</Text>
+                <CustomInput
+                p="13px 16px"
                   placeholder="Token name"
                   disabled={loading}
                   value={tokenName}
-                  onChange={e => setTokenName(e.target.value)}
-                />
+                  onChange={(e: any) => setTokenName(e.target.value)}
+                  />
+                  </Flex>
 
-                <Box mt="20px">Description</Box>
-                <Input
+                <Flex flexDir="column" gap="8px">
+                <Text >Description</Text>
+                <CustomInput
+                p="13px 16px"
                   placeholder="Token description"
                   disabled={loading}
                   value={tokenDescription}
-                  onChange={e => setTokenDescription(e.target.value)}
+                  onChange={(e: any) => setTokenDescription(e.target.value)}
                 />
+                </Flex>
 
-                <Box mt="20px">Supply</Box>
-                <Input
+                <Flex flexDir="column" gap="8px">
+                <Text>Supply</Text>
+                <CustomInput
+                p="13px 16px"
                   disabled={loading}
                   value={tokenSupply}
                   type="number"
-                  onChange={e => setTokenSupply(Number(e.target.value))}
+                  onChange={(e: any) => setTokenSupply(Number(e.target.value))}
                 />
+                </Flex>
 
-                <Button mt="40px" isDisabled={stage == ListingStage.FILL_TOKEN_DATA} onClick={mintToken}>
+                <Button
+                  mt="20px"
+                  isDisabled={stage == ListingStage.FILL_TOKEN_DATA}
+                  onClick={mintToken}
+                >
                   Mint token
                 </Button>
               </Flex>
             )}
-            {(stage == ListingStage.SELECT_FILES || stage == ListingStage.UPLOAD_FILES) && (
+            {(stage == ListingStage.SELECT_FILES ||
+              stage == ListingStage.UPLOAD_FILES) && (
               <Flex>
-                <FileUpload mintedTokenAddress={mintedTokenAddress} setStage={setStage} loading={loading}/>
+                <FileUpload
+                  mintedTokenAddress={mintedTokenAddress}
+                  setStage={setStage}
+                  loading={loading}
+                />
               </Flex>
             )}
-            {(stage == ListingStage.FILL_LISTING_DATA || stage == ListingStage.LIST_ON_MARKETPLACE) && (
+            {(stage == ListingStage.FILL_LISTING_DATA ||
+              stage == ListingStage.LIST_ON_MARKETPLACE) && (
               <Flex>
                 <Button onClick={listOnMarketplace}>Set for sale</Button>
               </Flex>
             )}
           </Flex>
         </Flex>
-        <Flex paddingLeft="50px" borderLeft="1px solid" borderColor="rgba(255,255,255,0.2)" flexDir="column" mt="12px">
+        <Flex
+          paddingLeft="50px"
+          borderLeft="1px solid"
+          borderColor="rgba(255,255,255,0.2)"
+          flexDir="column"
+          mt="12px"
+        >
           <CurrentStage stage={stage} loading={loading} />
         </Flex>
       </Grid>
