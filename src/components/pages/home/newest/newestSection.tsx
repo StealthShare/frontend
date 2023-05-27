@@ -51,7 +51,7 @@ export const NewestSection = () => {
                 imageUrl={item.image}
                 name={item.name}
                 price={item.price}
-                size={1.2}
+                size={item.size}
                 peers={213}
                 token={item.token}
                 address={item._id}

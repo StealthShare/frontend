@@ -9,6 +9,7 @@ import { useCartContext } from "../../provider/cart/CartContext";
 import { useUserContext } from "../../provider/user/UserContext";
 import { currencyFormatter } from "../../utils/currencyFormatter";
 import { DownloadIcon } from "@chakra-ui/icons";
+import { fileSizeFormatter } from "../../utils/fileSizeFormatter";
 
 export interface IFileItem {
   category: string;
@@ -117,7 +118,7 @@ export const FileItem: FC<IFileItem> = ({
               fontWeight="500"
               bgColor="gray"
             >
-              {1.2}GB
+              {fileSizeFormatter(size) ?? ""}
             </Box>
           </Flex>
         </Flex>
