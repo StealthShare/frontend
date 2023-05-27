@@ -5,12 +5,9 @@ export const BgPattern = () => {
   return (
     <Flex
       w="100vw"
-      h="100vh"
-      position="absolute"
-      zIndex="0"
-      top="0"
-      left="0"
-      overflow="hidden"
+      h="100%"
+      overflow='hidden'
+      pos="absolute"
     >
       <Box
         position="absolute"
@@ -18,6 +15,7 @@ export const BgPattern = () => {
         left="0"
         bgColor="black"
         filter="blur(70px)"
+       
         bgGradient="linear(225deg, rgba(0,0,0,1) 0%, rgba(186,116,248,0.6) 50%, rgba(0,0,0,1) 100%)"
         w="60vw"
         h="60vh"
@@ -29,6 +27,7 @@ export const BgPattern = () => {
         top="0"
         right="0"
         bgColor="black"
+       
         filter="blur(70px)"
         bgGradient="linear(135deg, rgba(0,0,0,1) 0%, rgba(186,116,248,0.6) 50%, rgba(0,0,0,1) 100%)"
         w="40vw"

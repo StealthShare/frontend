@@ -9,7 +9,7 @@ import { useUserContext } from '../provider/user/UserContext';
 
 export const Home = () => {
   return (
-    <Flex w="100vw" flexDir="column">
+    <Flex w="100vw" flexDir="column" >
       <PageContainer>
         <SearchSection />
       </PageContainer>

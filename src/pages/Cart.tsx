@@ -8,7 +8,7 @@ import { useCartContext } from '../provider/cart/CartContext';
 import { useUserContext } from '../provider/user/UserContext';
 
 export const Cart = () => {
-  const { cartData, deleteItemByAddress } = useCartContext();
+  const { cartData, deleteItemByAddress, clearCart } = useCartContext();
 
   return (
     <PageContainer>
@@ -24,7 +24,7 @@ export const Cart = () => {
                     {cartData?.length}
                   </Box>
                 </Box>
-                <Box cursor="pointer" color="brandPrimary" textDecor="underline">
+                <Box onClick={clearCart} cursor="pointer" color="brandPrimary" textDecor="underline">
                   Clear cart
                 </Box>
               </Flex>

@@ -7,12 +7,14 @@ import { ethers } from 'ethers';
 
 interface IUserContext {
   cartData: any[] | null;
-  deleteItemByAddress: (address: string) => void
+  deleteItemByAddress: (address: string) => void;
+  clearCart: ()=> void;
 }
 
 const initValue: IUserContext = {
   cartData: [],
-  deleteItemByAddress: (address: string) => {}
+  deleteItemByAddress: (address: string) => {},
+  clearCart: () => {}
 };
 
 export interface CartItem {
@@ -50,6 +52,10 @@ export const CartContextProvider = ({ children }: { children: React.ReactNode })
     },
   ]);
 
+  const clearCart = () => {
+    setCartData(null)
+  }
+
   const deleteItemByAddress = (address: string) => {
     if(cartData?.length == 1) {
       setCartData(null)
@@ -60,7 +66,7 @@ export const CartContextProvider = ({ children }: { children: React.ReactNode })
     
   }
 
-  return <CartContext.Provider value={{ cartData, deleteItemByAddress }}>{children}</CartContext.Provider>;
+  return <CartContext.Provider value={{ cartData, clearCart, deleteItemByAddress }}>{children}</CartContext.Provider>;
 };
 
 export const useCartContext = () => {

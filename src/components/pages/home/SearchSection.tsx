@@ -14,9 +14,9 @@ import { Heading } from "../../shared/Heading";
 
 export const SearchSection = () => {
   return (
-    <Flex flexDir="column" gap="25px" mt="50px" justify="flex-start">
+    <Flex flexDir="column" gap="25px" mt="50px" zIndex="10" justify="flex-start">
       <Heading text="Search for torrents" />
-      <InputGroup w="70%">
+      <InputGroup  zIndex="10"  w="70%">
         <CustomInput placeholder="Search in StealthShare" />
         <InputRightElement h="100%">
           <Button mr="16px" borderRadius="50%" bg="rgba(186, 116, 248, 0.5)">

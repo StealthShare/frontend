@@ -5,6 +5,7 @@ import { FileUploader } from "react-drag-drop-files";
 export const FileUpload = () => {
   const [files, setFiles] = useState(null);
   const [formData, setFormData] = useState<FormData>(new FormData());
+  
   const handleChange = (incomingFiles: any) => {
     setFiles(incomingFiles);
     if (incomingFiles !== null) {
