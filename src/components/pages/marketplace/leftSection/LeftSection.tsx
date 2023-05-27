@@ -27,7 +27,7 @@ export const LeftSection: FC<ILeftSectionProps> = ({ activeGrid }) => {
         </InputRightElement>
       </InputGroup>
       {activeGrid === "big" && (
-        <Grid gap="15px" flexWrap="wrap" templateColumns="repeat(4, 1fr)">
+        <Grid gap="20px" flexWrap="wrap" templateColumns="repeat(3, 1fr)">
           <FileItem
             isSmall
             category="Games"
