@@ -74,7 +74,7 @@ export const CartContextProvider = ({
       const index = cartData
         .map((data: any) => data.address)
         .indexOf(item.address);
-      var pom = cartData.at(index);
+      var pom = (cartData as any).at(index);
       pom.amount += 1;
       setCartData([
         ...cartData.slice(0, index),

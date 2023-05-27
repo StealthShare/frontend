@@ -10,8 +10,10 @@ import { MARKET_ABI } from '../abi/market';
 import { ERC1155_ABI } from '../abi/erc1155';
 import { FILE_TOKEN_BYTECODE } from '../constants/fileTokenBytecode';
 import { FILETOKEN_ABI } from '../abi/file';
-import { MARKET_ADDRESS, MINTER_CONTRACT_ADDRESS } from '../constants';
+import { API_URL, MARKET_ADDRESS, MINTER_CONTRACT_ADDRESS } from '../constants';
 import { CustomInput } from '../components/shared/CustomInput';
+import { HeadingSmall } from '../components/shared/HeadingSmall';
+import axios from 'axios';
 
 export const Sell = () => {
   const [stage, setStage] = useState<ListingStage>(ListingStage.FILL_TOKEN_DATA);
@@ -34,10 +36,19 @@ export const Sell = () => {
         const factory = new ethers.Contract(MINTER_CONTRACT_ADDRESS, FILETOKEN_ABI, singer);
 
 
+        alert(tokenSupply)
+
+        const res = await axios.post(`${API_URL}/uploadToIPFS`, {
+          name: tokenName,
+          description: tokenDescription
+        });
+
+        console.log(res)
+
+ 
 
 
-
-        const tx: any = await factory.mint('hi', tokenSupply)
+        const tx: any = await factory.mint(res.data, Number(tokenSupply))
         const rc = await tx.wait(2)
 
         const tx2: any = await factory.mint.staticCall('hi', tokenSupply)
@@ -103,9 +114,9 @@ export const Sell = () => {
 
   return (
     <PageContainer>
-      <Grid mt="40px" mb="60px" templateColumns="400px 1fr" gap="80px">
+      <Grid mt="40px" mb="60px" templateColumns="350px 1fr" gap="80px">
         <Flex
-          paddingLeft="50px"
+          paddingRight="20px"
           borderRight="1px solid"
           borderColor="rgba(255,255,255,0.2)"
           flexDir="column"
@@ -113,8 +124,8 @@ export const Sell = () => {
         >
           <CurrentStage stage={stage} loading={loading} />
         </Flex>
-        <Flex h="100vh" flexDir="column" gap="40px">
-          <Heading text="Sell files" />
+        <Flex mt="20px" h="100vh" flexDir="column" gap="40px">
+          <HeadingSmall text="Sell files" />
           <Flex flexDir="column">
             {(stage == ListingStage.FILL_TOKEN_DATA || stage == ListingStage.MINT_TOKEN) && (
               <Flex flexDir="column" gap="20px" fontSize="18px">

@@ -1,4 +1,5 @@
 import { Box, Flex, Spinner } from '@chakra-ui/react';
+import { Heading } from '../../../shared/Heading';
 import { HeadingSmall } from '../../../shared/HeadingSmall';
 
 export enum ListingStage {
@@ -40,7 +41,7 @@ const Item = ({
 export const CurrentStage = ({ stage, loading }: { stage: ListingStage; loading: boolean }) => {
   return (
     <Flex gap="40px" flexDir="column">
-      <HeadingSmall text="Upload status" />
+      <Heading text="Upload status" />
       <Flex flexDir="column">
         <Item
 		number={1}
