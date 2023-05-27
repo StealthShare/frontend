@@ -126,7 +126,12 @@ export const Sell = () => {
             )}
             {(stage == ListingStage.SELECT_FILES || stage == ListingStage.UPLOAD_FILES) && (
               <Flex>
-                <FileUpload mintedTokenAddress={mintedTokenAddress} setStage={setStage} loading={loading}/>
+                <FileUpload
+                  setLoading={setLoading}
+                  mintedTokenAddress={mintedTokenAddress}
+                  setStage={setStage}
+                  loading={loading}
+                />
               </Flex>
             )}
             {(stage == ListingStage.FILL_LISTING_DATA || stage == ListingStage.LIST_ON_MARKETPLACE) && (

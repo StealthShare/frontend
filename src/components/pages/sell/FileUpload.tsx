@@ -7,7 +7,7 @@ import { API_URL } from '../../../constants';
 import { useUserContext } from '../../../provider/user/UserContext';
 import { ListingStage } from './CurrentStage/currentStage';
 
-export const FileUpload = ({ setStage, loading, mintedTokenAddress }: {mintedTokenAddress: string, loading : boolean, setStage: (stage: ListingStage) => void }) => {
+export const FileUpload = ({ setLoading, setStage, loading, mintedTokenAddress }: { setLoading: (state: boolean) => void,mintedTokenAddress: string, loading : boolean, setStage: (stage: ListingStage) => void }) => {
   const { jwt } = useUserContext();
   const [files, setFiles] = useState(null);
   const [formData, setFormData] = useState<FormData>(new FormData());
@@ -37,15 +37,17 @@ export const FileUpload = ({ setStage, loading, mintedTokenAddress }: {mintedTok
   
 
   const upload = async () => {
-    const res = await axios.post(`${API_URL}/${mintedTokenAddress}/uploadFile`, formData, {
+   
+    axios.post(`${API_URL}/${mintedTokenAddress}/uploadFile`, formData, {
       headers: {
         'x-access-token': jwt,
         'Content-Type': 'multipart/form-data',
       },
     }).then(() => {
+      
       setStage(ListingStage.FILL_LISTING_DATA)
-    }).catch(() => {
-
+    }).catch((error) => {
+      console.log(error)
     })
   };
 
@@ -72,7 +74,7 @@ export const FileUpload = ({ setStage, loading, mintedTokenAddress }: {mintedTok
             {files === null && <Text>Drop files here</Text>}
             {files !== null && (
               <Flex flexDir="column" w="100%" gap="4px">
-                {Array.from(files).map((file: any) => (
+                {Array.from(files as any).map((file: any) => (
                   <Flex
                     p="11px"
                     borderRadius="8px"

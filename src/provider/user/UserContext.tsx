@@ -72,16 +72,16 @@ export const UserContextProvider = ({
       //   }
       // );
 
-      const res3 = await axios.get(
-        `${API_URL}/${"0x6f07465bD94A4e12ee77905EB6477497f0AaBcA7"}/listings`,
-        {
-          headers: {
-            "x-access-token": res.data
-          }
-        }
-      );
+      // const res3 = await axios.get(
+      //   `${API_URL}/${"0x6f07465bD94A4e12ee77905EB6477497f0AaBcA7"}/listings`,
+      //   {
+      //     headers: {
+      //       "x-access-token": res.data
+      //     }
+      //   }
+      // );
 
-      console.log(res3);
+      // console.log(res3);
 
       setJWT(res.data);
       dispatchUser({ type: "LOGIN" });
