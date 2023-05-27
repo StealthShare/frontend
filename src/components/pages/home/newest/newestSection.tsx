@@ -2,11 +2,15 @@ import { Flex, Text } from '@chakra-ui/react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon } from '../../../../icons/ArrowRightIcon';
+import { useListingContext } from '../../../../provider/listings/ListingsContext';
 import { PageContainer } from '../../../shared/containers/PageContainer';
 import { FileItem } from '../../../shared/FileItem';
 import { HeadingSmall } from '../../../shared/HeadingSmall';
 
 export const NewestSection = () => {
+
+  const {listings } = useListingContext()
+
   return (
     <Flex flexDir="column" gap="30px" zIndex="1">
       <PageContainer>
@@ -38,60 +42,17 @@ export const NewestSection = () => {
         }}
       >
         <Flex minW="calc((100vw - 1200px) / 2 - 17px)" h="100px"></Flex>
-        <FileItem
-          category="Games"
-          imageUrl="https://www.picsum.photos/268/201"
-          name="Za szybcy za wściekli 2024"
-          price={21}
-          size={1.2}
-          peers={213}
-          isSmall={true}
-        />
-        <FileItem
-          category="Games"
-          imageUrl="https://www.picsum.photos/268/201"
-          name="Za szybcy za wściekli 2024"
-          price={21}
-          size={1.2}
-          isSmall={true}
-          peers={213}
-        />
-        <FileItem
-          category="Games"
-          imageUrl="https://www.picsum.photos/268/201"
-          name="Za szybcy za wściekli 2024"
-          price={21}
-          size={1.2}
-          peers={213}
-          isSmall={true}
-        />
-        <FileItem
-          category="Games"
-          imageUrl="https://www.picsum.photos/268/201"
-          name="Za szybcy za wściekli 2024"
-          price={21}
-          size={1.2}
-          isSmall={true}
-          peers={213}
-        />
-        <FileItem
-          category="Games"
-          imageUrl="https://www.picsum.photos/268/201"
-          name="Za szybcy za wściekli 2024"
-          price={21}
-          isSmall={true}
-          size={1.2}
-          peers={213}
-        />
-        <FileItem
-          category="Games"
-          imageUrl="https://www.picsum.photos/268/201"
-          name="Za szybcy za wściekli 2024"
-          price={21}
-          size={1.2}
-          isSmall={true}
-          peers={213}
-        />
+        {listings && listings.map((item, index) => {
+            return <FileItem key={item._id}
+             isSmall
+             category="Games"
+             imageUrl={item.image}
+             name={item.name}
+             price={item.price}
+             size={1.2}
+             peers={213}
+           />
+          })}
         <Flex minW="calc((100vw - 1200px) / 2 - 17px)" h="100px"></Flex>
       </Flex>
     </Flex>

@@ -37,18 +37,15 @@ export const ListingContextProvider = ({
     setLoading(true);
     console.log(true);
     const res = await axios.get(
-      `${API_URL}/${"0x6f07465bD94A4e12ee77905EB6477497f0AaBcA7"}/listings`,
-      {
-        headers: {
-          "x-access-token": jwt
-        }
-      }
+      `${API_URL}/listings`,
+     
     );
     setLoading(false);
     console.log(false);
     console.log(res.data.listings);
     if (res.status === 200) setListings(res.data.listings);
   };
+  
   useEffect(() => {
     getListings();
   }, []);
