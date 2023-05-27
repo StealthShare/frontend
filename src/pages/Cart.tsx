@@ -26,6 +26,16 @@ export const Cart = () => {
     removeOneByAddress
   } = useCartContext();
 
+
+  const buyTokens = () => {
+    if(cartData) {
+      console.log(cartData)
+      const tokens = cartData.map((token) => {return token.address }) 
+
+      console.log(tokens)
+    }
+  }
+
   return (
     <>
       <PageContainer>
@@ -172,7 +182,7 @@ export const Cart = () => {
                     </Box>
                   </Flex>
 
-                  <Button fontSize="16px" px="40px">
+                  <Button onClick={buyTokens} fontSize="16px" px="40px">
                     Proceed to payment
                   </Button>
                 </Flex>

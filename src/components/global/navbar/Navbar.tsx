@@ -35,7 +35,7 @@ export const Navbar = () => {
       position="fixed"
       top="0"
       w="100%"
-      transition="0.3s all"
+      transition="0.2s all"
       {...(scrollPosition > 30
         ? {
             boxShadow: "3.4px 6.7px 6.7px hsl(0deg 0% 0% / 0.05)",
@@ -51,6 +51,7 @@ export const Navbar = () => {
               transform="translateX(-16px)"
               mt="-19px"
               mb="-19px"
+              w="200px"
             />
           </Link>
           <Flex gap="37px" align="center">

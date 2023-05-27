@@ -167,7 +167,7 @@ export const FileItem: FC<IFileItem> = ({
                 : () =>
                     addItemToCart({
                       amount: 1,
-                      address: address,
+                      address: token,
                       imageUrl: imageUrl,
                       category: category,
                       name: name,
