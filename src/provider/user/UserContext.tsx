@@ -65,10 +65,6 @@ export const UserContextProvider = ({
         address: account
       });
 
-<<<<<<< HEAD
-
-=======
->>>>>>> f256487b4b49be5fa450cae15222d5c38b375b36
       setJWT(res.data);
       dispatchUser({ type: "LOGIN" });
     } catch (error) {
