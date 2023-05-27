@@ -11,6 +11,7 @@ interface IListing {
   name: string;
   image: string;
   description: string;
+  size: number;
 }
 
 interface IListingContext {
