@@ -1,5 +1,6 @@
 import { Box, Flex } from '@chakra-ui/react';
 import React from 'react';
+import { Carousel } from '../components/pages/home/carousel/Carousel';
 import { NewestSection } from '../components/pages/home/newest/newestSection';
 import { SearchSection } from '../components/pages/home/SearchSection';
 import { SelectedSection } from '../components/pages/home/selected/SelectedSection';
@@ -14,7 +15,12 @@ export const Home = () => {
         <SearchSection />
       </PageContainer>
       <LineContainer>
+      <PageContainer>
+        <Carousel/>
+        </PageContainer>
         <SelectedSection />
+        
+       
         <NewestSection/>
       </LineContainer>
     </Flex>

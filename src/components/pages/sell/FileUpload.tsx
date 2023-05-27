@@ -7,7 +7,7 @@ import { API_URL } from '../../../constants';
 import { useUserContext } from '../../../provider/user/UserContext';
 import { ListingStage } from './CurrentStage/currentStage';
 
-export const FileUpload = ({ setLoading, setStage, loading, mintedTokenAddress }: { setLoading: (state: boolean) => void,mintedTokenAddress: string, loading : boolean, setStage: (stage: ListingStage) => void }) => {
+export const FileUpload = ({ setLoading, setStage, loading, mintedTokenAddress }: { setLoading: (state: boolean) => void,mintedTokenAddress: number, loading : boolean, setStage: (stage: ListingStage) => void }) => {
   const { jwt } = useUserContext();
   const [files, setFiles] = useState(null);
   const [formData, setFormData] = useState<FormData>(new FormData());

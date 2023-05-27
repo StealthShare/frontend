@@ -51,14 +51,7 @@ export const Navbar = () => {
             />
           </Link>
           <Flex gap="37px" align="center">
-            <Link to="/" style={{ position: "relative" }}>
-              <HomeIcon
-                color={homeIconColor}
-                onMouseEnter={() => setHomeIconColor("#BA74F8")}
-                onMouseLeave={() => setHomeIconColor("white")}
-              />
-              {pathname === "/" && <ActiveLinkIndicator />}
-            </Link>
+            
             <Flex gap="32px" align="center" _hover={{ color: "brandPrimary" }}>
               <Navitem text="Marketplace" location="/marketplace" />
               <Box w="1px" h="18px" bgColor="#383A56" />
