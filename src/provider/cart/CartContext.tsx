@@ -1,20 +1,32 @@
-import axios from 'axios';
-import React, { createContext, useContext, useReducer } from 'react';
-import useLocalStorage from 'use-local-storage';
-import { API_URL } from '../../constants';
-import { cartReducer } from './cartReducer';
-import { ethers } from 'ethers';
+import axios from "axios";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+  useState
+} from "react";
+import useLocalStorage from "use-local-storage";
+import { API_URL } from "../../constants";
+import { cartReducer } from "./cartReducer";
+import { ethers } from "ethers";
 
 interface IUserContext {
   cartData: any[] | null;
   deleteItemByAddress: (address: string) => void;
-  clearCart: ()=> void;
+  removeOneByAddress: (address: string) => void;
+  clearCart: () => void;
+  addItemToCart: (data: any) => void;
+  price: number;
 }
 
 const initValue: IUserContext = {
   cartData: [],
   deleteItemByAddress: (address: string) => {},
-  clearCart: () => {}
+  removeOneByAddress: (address: string) => {},
+  clearCart: () => {},
+  addItemToCart: () => {},
+  price: 0
 };
 
 export interface CartItem {
@@ -29,51 +41,117 @@ export interface CartItem {
 
 const CartContext = createContext(initValue);
 
-export const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
+export const CartContextProvider = ({
+  children
+}: {
+  children: React.ReactNode;
+}) => {
   const [{}, dispatchUser] = useReducer(cartReducer, initValue);
-  const [cartData, setCartData] = useLocalStorage<any[] | null>('CART', [
-    {
-      amount: 1,
-      address: '12',
-      imageUrl: '/assets/samples/1.png',
-      category: 'Gaming',
-      name: 'Some shit',
-      price: 22,
-      size: 1.2,
-    },
-    {
-      amount: 1,
-      imageUrl: '/assets/samples/1.png',
-      address: '34',
-      category: 'Something',
-      name: 'Elo elo 320',
-      price: 40,
-      size: 0.1,
-    },
-  ]);
+  const [price, setPrice] = useState(0);
+  const [cartData, setCartData] = useLocalStorage<any[] | null>("CART", []);
+
+  useEffect(() => {
+    console.log(cartData);
+    var p = 0;
+    cartData?.forEach((data: any) => {
+      p += data.price * data.amount;
+    });
+    setPrice(p);
+  }, []);
 
   const clearCart = () => {
-    setCartData(null)
-  }
+    setCartData(null);
+    setPrice(0);
+  };
+
+  const addItemToCart = (item: any) => {
+    if (
+      cartData !== null &&
+      cartData.find((data: any) => {
+        return data.address === item.address;
+      })
+    ) {
+      const index = cartData
+        .map((data: any) => data.address)
+        .indexOf(item.address);
+      var pom = cartData.at(index);
+      pom.amount += 1;
+      setCartData([
+        ...cartData.slice(0, index),
+        pom,
+        ...cartData.slice(index + 1)
+      ]);
+    } else if (cartData !== null) {
+      setCartData([...cartData, item]);
+    } else {
+      setCartData([item]);
+    }
+    setPrice((prevState) => prevState + item.price);
+  };
 
   const deleteItemByAddress = (address: string) => {
-    if(cartData?.length == 1) {
-      setCartData(null)
+    if (cartData?.length == 1) {
+      setCartData(null);
+      setPrice(0);
     } else {
-      setCartData(cartData?.filter((item) => item.address != address))
+      const item = cartData?.filter((item) => item.address === address)[0];
+      setCartData(cartData?.filter((item) => item !== address));
+      setPrice((prevState) => prevState - item.price * item.amount);
     }
-  
-    
-  }
+  };
 
-  return <CartContext.Provider value={{ cartData, clearCart, deleteItemByAddress }}>{children}</CartContext.Provider>;
+  const removeOneByAddress = (address: string) => {
+    const item = cartData!.filter((item) => item.address === address)[0];
+    console.log(item.amount);
+
+    item.amount -= 1;
+    setPrice((prevState) => prevState - item.price);
+    const index = cartData
+      ?.map((data: any) => data.address)
+      .indexOf(item.address);
+    if (item.amount === 0) {
+      if (cartData?.length == 1) {
+        setCartData(null);
+        setPrice(0);
+      } else {
+        setCartData([
+          ...cartData!.slice(0, index! - 1),
+          ...cartData!.slice(index! + 1)
+        ]);
+      }
+    } else {
+      if (cartData!.length)
+        setCartData([
+          ...cartData!.slice(0, index! - 1),
+          item,
+          ...cartData!.slice(index! + 1)
+        ]);
+    }
+  };
+
+  return (
+    <CartContext.Provider
+      value={{
+        cartData,
+        clearCart,
+        deleteItemByAddress,
+        addItemToCart,
+        price,
+        removeOneByAddress
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
 };
 
 export const useCartContext = () => {
   const context = useContext(CartContext);
 
   if (!context) {
-    throw new Error('`useCartProvider` hook cannot be used outside of a `CartProvider`!');
+    throw new Error(
+      "`useCartProvider` hook cannot be used outside of a `CartProvider`!"
+    );
   }
   return context;
 };

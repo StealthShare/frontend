@@ -103,7 +103,16 @@ export const Sell = () => {
 
   return (
     <PageContainer>
-      <Grid mt="40px" mb="60px" templateColumns="1fr 400px" gap="80px">
+      <Grid mt="40px" mb="60px" templateColumns="400px 1fr" gap="80px">
+        <Flex
+          paddingLeft="50px"
+          borderRight="1px solid"
+          borderColor="rgba(255,255,255,0.2)"
+          flexDir="column"
+          mt="12px"
+        >
+          <CurrentStage stage={stage} loading={loading} />
+        </Flex>
         <Flex h="100vh" flexDir="column" gap="40px">
           <Heading text="Sell files" />
           <Flex flexDir="column">
@@ -163,9 +172,6 @@ export const Sell = () => {
               </Flex>
             )}
           </Flex>
-        </Flex>
-        <Flex paddingLeft="50px" borderLeft="1px solid" borderColor="rgba(255,255,255,0.2)" flexDir="column" mt="12px">
-          <CurrentStage stage={stage} loading={loading} />
         </Flex>
       </Grid>
     </PageContainer>

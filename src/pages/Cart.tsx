@@ -1,4 +1,10 @@
-import { Box, Button, Flex, Grid, Image } from "@chakra-ui/react";
+import {
+  AddIcon,
+  DeleteIcon,
+  MinusIcon,
+  PlusSquareIcon
+} from "@chakra-ui/icons";
+import { Box, Button, Flex, Grid, Image, Text } from "@chakra-ui/react";
 import React from "react";
 import { EmptyCart } from "../components/pages/cart/EmptyCart/emptyCart";
 import { NewestSection } from "../components/pages/home/newest/newestSection";
@@ -8,16 +14,24 @@ import { Heading } from "../components/shared/Heading";
 import { BookmarkIcon } from "../icons/BookmarkIcon";
 import { useCartContext } from "../provider/cart/CartContext";
 import { useUserContext } from "../provider/user/UserContext";
+import { currencyFormatter } from "../utils/currencyFormatter";
 
 export const Cart = () => {
-  const { cartData, deleteItemByAddress, clearCart } = useCartContext();
+  const {
+    cartData,
+    deleteItemByAddress,
+    clearCart,
+    price,
+    addItemToCart,
+    removeOneByAddress
+  } = useCartContext();
 
   return (
     <>
       <PageContainer>
         <Heading text={"Your shopping cart"} />
         <>
-          {cartData ? (
+          {cartData !== null ? (
             <Flex mt="40px" flexDir="column" gap="20px">
               <Flex justifyContent="space-between">
                 <Flex fontFamily="Inter" gap="20px">
@@ -91,6 +105,31 @@ export const Cart = () => {
                           </Flex>
                         </Flex>
                         <Flex align="center" gap="50px">
+                          <Flex align="center" gap="15px">
+                            <Flex
+                              align="center"
+                              justify="center"
+                              cursor="pointer"
+                              boxSize="40px"
+                              borderRadius="50%"
+                              _hover={{ bg: "rgba(255,255,255,0.2)" }}
+                              onClick={() => removeOneByAddress(item.address)}
+                            >
+                              <MinusIcon />
+                            </Flex>
+                            <Text>{item.amount}</Text>
+                            <Flex
+                              align="center"
+                              justify="center"
+                              cursor="pointer"
+                              boxSize="40px"
+                              borderRadius="50%"
+                              _hover={{ bg: "rgba(255,255,255,0.2)" }}
+                              onClick={() => addItemToCart(item)}
+                            >
+                              <AddIcon />
+                            </Flex>
+                          </Flex>
                           <Flex
                             align="center"
                             justify="center"
@@ -113,7 +152,7 @@ export const Cart = () => {
                               $
                             </Box>
                             <Box fontFamily="Inter">
-                              {item.price.toFixed(2)}
+                              {currencyFormatter(item.price).slice(1)}
                             </Box>
                           </Flex>
                         </Flex>
@@ -127,7 +166,7 @@ export const Cart = () => {
                   <Flex justifyContent="space-between">
                     <Box fontFamily="Inter">Total: </Box>
                     <Box fontWeight="bold" fontSize="20px">
-                      {cartData.map((i) => i.price).reduce((a, b) => a + b)}.00$
+                      {currencyFormatter(price)}
                     </Box>
                   </Flex>
 

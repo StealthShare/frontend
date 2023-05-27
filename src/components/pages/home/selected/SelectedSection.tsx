@@ -16,7 +16,7 @@ export const SelectedSection = () => {
     }
   }, [ref.current]);
 
-  const {listings} = useListingContext()
+  const { listings } = useListingContext();
 
   return (
     <Flex flexDir="column" gap="30px" zIndex="1">
@@ -50,16 +50,21 @@ export const SelectedSection = () => {
         }}
       >
         <Flex minW="calc((100vw - 1200px) / 2 - 17px)" h="100px"></Flex>
-        {listings && listings.map((item, index) => {
-            return <FileItem key={item._id}
-             isSmall
-             category="Games"
-             imageUrl={item.image}
-             name={item.name}
-             price={item.price}
-             size={1.2}
-             peers={213}
-           />
+        {listings &&
+          listings.map((item, index) => {
+            return (
+              <FileItem
+                key={item._id}
+                isSmall
+                category="Games"
+                imageUrl={item.image}
+                name={item.name}
+                price={item.price}
+                size={1.2}
+                peers={213}
+                token={item.token}
+              />
+            );
           })}
         <Flex minW="calc((100vw - 1200px) / 2 - 17px)" h="100px"></Flex>
       </Flex>
