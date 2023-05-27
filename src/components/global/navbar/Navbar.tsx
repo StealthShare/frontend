@@ -25,7 +25,10 @@ export const Navbar = () => {
       zIndex="100"
       justify="space-between"
       align="center"
-      py={{ base: "15px", md: "49px" }}
+      py={{
+        base: scrollPosition > 30 ? "10px" : "15px",
+        md: scrollPosition > 30 ? "25px" : "49px"
+      }}
       position="fixed"
       top="0"
       w="100%"

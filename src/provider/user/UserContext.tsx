@@ -63,14 +63,14 @@ export const UserContextProvider = ({
         address: account
       });
 
-      // const res2 = await axios.get(
-      //   `${API_URL}/${"0x6f07465bD94A4e12ee77905EB6477497f0AaBcA7"}/download`,
-      //   {
-      //     headers: {
-      //       "x-access-token": res.data
-      //     }
-      //   }
-      // );
+      const res2 = await axios.get(
+        `${API_URL}/${"0x9ADe7B7c9B57CE317e0e471950CE67307D7fD91e"}/download`,
+        {
+          headers: {
+            "x-access-token": res.data
+          }
+        }
+      );
 
       // const res3 = await axios.get(
       //   `${API_URL}/${"0x6f07465bD94A4e12ee77905EB6477497f0AaBcA7"}/listings`,
@@ -81,7 +81,7 @@ export const UserContextProvider = ({
       //   }
       // );
 
-      // console.log(res3);
+      console.log(res2);
 
       setJWT(res.data);
       dispatchUser({ type: "LOGIN" });
