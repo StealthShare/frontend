@@ -31,9 +31,10 @@ export const CartTooltip = () => {
         <Box fontSize="16px" color="white">
           Looking for inspiration?
         </Box>
-        <Button px="70px" mt="30px" onClick={() => navigate("/marketplace")}>
+        <Link to="/marketplace">
+         <Button px="70px" mt="30px">
           Go to marketplace
-        </Button>
+        </Button> </Link>
       </Flex>
     </Flex>
   );

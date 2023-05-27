@@ -12,7 +12,7 @@ export const Marketplace = () => {
     <PageContainer>
       <Flex flexDir="column" mt="40px">
         <Heading text="Marketplace" />
-        <Grid templateColumns="5fr 3fr" mt="20px" gap="50px">
+        <Grid templateColumns="auto 350px" mt="20px" gap="50px">
           <LeftSection activeGrid={activeGrid} />
           <RightSection activeGrid={activeGrid} setActiveGrid={setActiveGrid} />
         </Grid>

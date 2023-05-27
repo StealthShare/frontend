@@ -1,8 +1,9 @@
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
-import React, { FC } from "react";
-import { BookmarkIcon } from "../../icons/BookmarkIcon";
-import { EyeIcon } from "../../icons/EyeIcon";
-import { currencyFormatter } from "../../utils/currencyFormatter";
+import { Box, Flex, Grid, Image, Text } from '@chakra-ui/react';
+import React, { FC } from 'react';
+import { BookmarkIcon } from '../../icons/BookmarkIcon';
+import { CartIcon } from '../../icons/CartIcon';
+import { EyeIcon } from '../../icons/EyeIcon';
+import { currencyFormatter } from '../../utils/currencyFormatter';
 
 export interface IFileItem {
   category: string;
@@ -14,55 +15,67 @@ export interface IFileItem {
   isSmall?: boolean;
 }
 
-export const FileItem: FC<IFileItem> = ({
-  category,
-  imageUrl,
-  name,
-  price,
-  size,
-  peers,
-  isSmall
-}) => {
+export const FileItem: FC<IFileItem> = ({ category, imageUrl, name, price, size, peers, isSmall }) => {
   return (
     <Flex
-      bgGradient="linear(180deg, #282939 0%, rgba(40, 41, 57, 0.51) 100%)"
-      p={isSmall ? "13px 11px" : "17px 15px"}
-      borderRadius="17px"
+      bg="#282939"
+      _hover={{ bg: '#2d2f3b' }}
+      cursor="pointer"
+      p={isSmall ? '0' : '22px 25px'}
+      borderRadius="8px"
       fontFamily="Inter"
+      pos="relative"
       flexDir="column"
-      gap="12px"
+      gap="14px"
+      role={'group'}
     >
-      <Flex gap="7px" align="center">
-        <BookmarkIcon />
-        <Text fontSize="10px" fontWeight="500" color="textSecondary">
-          {category}
-        </Text>
-      </Flex>
-      <Image
-        src={imageUrl}
-        minW={isSmall ? "200px" : "268px"}
-        minH={isSmall ? "150px" : "200px"}
-        maxW={isSmall ? "200px" : "268px"}
-        maxH={isSmall ? "150px" : "200px"}
+      <Box
+        bgPos="center"
+        bgSize="cover"
+        w="100%"
+        paddingBottom="100%"
+        bgImage={imageUrl}
+        minW={isSmall ? '200px' : '268px'}
+        minH={isSmall ? '150px' : '200px'}
+        maxW={isSmall ? 'auto' : '268px'}
+        maxH={isSmall ? 'auto' : '200px'}
         borderRadius="8px"
-      />
-      <Text fontSize={isSmall ? "14px" : "16px"} fontWeight="700">
-        {name.length > 27 ? name.slice(0, 27) + "..." : name}
-      </Text>
-      <Text mt="5px" fontSize="14px" fontWeight="600" color="brandPrimary">
-        {currencyFormatter(price)}
-      </Text>
-      <Box my="5px" h="1px" w="100%" bgColor="#383A56" />
-      <Flex justify="space-between" align="center">
-        <EyeIcon />
-        <Flex gap="19px" align="center" fontSize="12px" color="textSecondary">
-          <Text fontWeight="600">{size} GB</Text>
-          <Flex fontWeight="600">
-            <Text fontWeight="300">Peers:&nbsp;</Text>
-            <Text>{peers}</Text>
+        pos="relative"
+      >
+        <Flex
+          justify="flex-end"
+          align="center"
+          padding="0px 16px"
+          pos="absolute"
+          w="100%"
+          h="25%"
+          paddingTop="20px"
+          bg="linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(0,0,0,1) 100%)"
+          bottom="0px"
+        >
+          <Flex gap="7px" align="center">
+            <Box borderRadius="2px" paddingX="6px" fontSize="10px" fontWeight="500" bgColor="brandPrimary">
+              {category}
+            </Box>
+            <Box borderRadius="2px" paddingX="6px" fontSize="10px" fontWeight="500" bgColor="gray">
+              {1.2}GB
+            </Box>
           </Flex>
         </Flex>
-      </Flex>
+      </Box>
+      <Grid pos="relative" templateColumns="1fr 44px" padding="20px" paddingTop="0px" gap="20px">
+        <Flex flexDir="column" pos="relative" w="100%">
+          <Text maxW="100%" whiteSpace="nowrap" overflow="hidden" fontSize={isSmall ? '14px' : '16px'} fontWeight="700">
+            {name.length > 27 ? name.slice(0, 27) + '...' : name}
+          </Text>
+          <Text mt="0px" fontSize="16px" fontWeight="500" color="brandPrimary">
+            {currencyFormatter(price)}
+          </Text>
+        </Flex>
+        <Flex alignItems="center" border='1px solid' borderColor="brandPrimary" justify="center" h="100%"  borderRadius="4px" w="44px" _hover={{bg: "brandPrimary"}} bg="none">
+          <Image transform="translateX(-1px)" src="/assets/icons/shopping-cart.svg"/>
+        </Flex>
+      </Grid>
     </Flex>
   );
 };
