@@ -8,7 +8,6 @@ interface ICustomInputProps {
 export const CustomInput = ({ ...props }) => {
   return (
     <Input
-      {...props}
       variant="unstyled"
       p={props.p ? props.p : "22px 26px"}
       bgColor="rgba(0, 0, 0, 0.25)"
@@ -28,6 +27,7 @@ export const CustomInput = ({ ...props }) => {
         outline: "none !important",
         border: "1px solid rgba(255, 255, 255, 0.17)"
       }}
+      {...props}
     />
   );
 };
