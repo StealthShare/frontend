@@ -1,10 +1,10 @@
-import { Flex, Text } from "@chakra-ui/react";
-import React from "react";
-import { Link } from "react-router-dom";
-import { ArrowRightIcon } from "../../../../icons/ArrowRightIcon";
-import { PageContainer } from "../../../shared/containers/PageContainer";
-import { FileItem } from "../../../shared/FileItem";
-import { HeadingSmall } from "../../../shared/HeadingSmall";
+import { Flex, Text } from '@chakra-ui/react';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowRightIcon } from '../../../../icons/ArrowRightIcon';
+import { PageContainer } from '../../../shared/containers/PageContainer';
+import { FileItem } from '../../../shared/FileItem';
+import { HeadingSmall } from '../../../shared/HeadingSmall';
 
 export const NewestSection = () => {
   return (
@@ -26,15 +26,15 @@ export const NewestSection = () => {
         maxW="100vw"
         overflow="auto"
         css={{
-          "&::-webkit-scrollbar": {
-            width: "4px"
+          '&::-webkit-scrollbar': {
+            width: '4px',
           },
-          "&::-webkit-scrollbar-track": {
-            width: "6px"
+          '&::-webkit-scrollbar-track': {
+            width: '6px',
           },
-          "&::-webkit-scrollbar-thumb": {
-            borderRadius: "24px"
-          }
+          '&::-webkit-scrollbar-thumb': {
+            borderRadius: '24px',
+          },
         }}
       >
         <Flex minW="calc((100vw - 1200px) / 2 - 17px)" h="100px"></Flex>
@@ -45,6 +45,7 @@ export const NewestSection = () => {
           price={21}
           size={1.2}
           peers={213}
+          isSmall={true}
         />
         <FileItem
           category="Games"
@@ -52,6 +53,7 @@ export const NewestSection = () => {
           name="Za szybcy za wściekli 2024"
           price={21}
           size={1.2}
+          isSmall={true}
           peers={213}
         />
         <FileItem
@@ -61,12 +63,23 @@ export const NewestSection = () => {
           price={21}
           size={1.2}
           peers={213}
+          isSmall={true}
         />
         <FileItem
           category="Games"
           imageUrl="https://www.picsum.photos/268/201"
           name="Za szybcy za wściekli 2024"
           price={21}
+          size={1.2}
+          isSmall={true}
+          peers={213}
+        />
+        <FileItem
+          category="Games"
+          imageUrl="https://www.picsum.photos/268/201"
+          name="Za szybcy za wściekli 2024"
+          price={21}
+          isSmall={true}
           size={1.2}
           peers={213}
         />
@@ -76,14 +89,7 @@ export const NewestSection = () => {
           name="Za szybcy za wściekli 2024"
           price={21}
           size={1.2}
-          peers={213}
-        />
-        <FileItem
-          category="Games"
-          imageUrl="https://www.picsum.photos/268/201"
-          name="Za szybcy za wściekli 2024"
-          price={21}
-          size={1.2}
+          isSmall={true}
           peers={213}
         />
         <Flex minW="calc((100vw - 1200px) / 2 - 17px)" h="100px"></Flex>

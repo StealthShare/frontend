@@ -35,8 +35,7 @@ export const FileItem: FC<IFileItem> = ({ category, imageUrl, name, price, size,
         w="100%"
         paddingBottom="100%"
         bgImage={imageUrl}
-        minW={isSmall ? '200px' : '268px'}
-        minH={isSmall ? '150px' : '200px'}
+        minW={'220px'}
         maxW={isSmall ? 'auto' : '268px'}
         maxH={isSmall ? 'auto' : '200px'}
         borderRadius="8px"
@@ -63,17 +62,29 @@ export const FileItem: FC<IFileItem> = ({ category, imageUrl, name, price, size,
           </Flex>
         </Flex>
       </Box>
-      <Grid pos="relative" templateColumns="1fr 44px" padding="20px" paddingTop="0px" gap="20px">
-        <Flex flexDir="column" pos="relative" w="100%">
-          <Text maxW="100%" whiteSpace="nowrap" overflow="hidden" fontSize={isSmall ? '14px' : '16px'} fontWeight="700">
+      <Grid pos="relative" templateColumns="1fr" margin="16px" marginTop="0px" gap="20px">
+        <Flex flexDir="column" pos="relative" w="100%" overflow="hidden">
+          <Text maxW="100%" whiteSpace="nowrap" fontSize={isSmall ? '14px' : '16px'} fontWeight="700">
             {name.length > 27 ? name.slice(0, 27) + '...' : name}
           </Text>
           <Text mt="0px" fontSize="16px" fontWeight="500" color="brandPrimary">
             {currencyFormatter(price)}
           </Text>
         </Flex>
-        <Flex alignItems="center" border='1px solid' borderColor="brandPrimary" justify="center" h="100%"  borderRadius="4px" w="44px" _hover={{bg: "brandPrimary"}} bg="none">
-          <Image transform="translateX(-1px)" src="/assets/icons/shopping-cart.svg"/>
+        <Flex  right="0px"
+            pos="absolute" display='none' padding="10px" transform="translate(10px,-10px)" bg="#282939" _groupHover={{ display: "block",  bg: '#2d2f3b' }}>
+          <Flex
+         
+            alignItems="center"
+            border="1px solid"
+            boxSize="44px"
+            borderColor="brandPrimary"
+            justify="center"
+            borderRadius="4px"
+            _hover={{ bg: 'brandPrimary' }}
+          >
+            <Image transform="translateX(-1px)" src="/assets/icons/shopping-cart.svg" />
+          </Flex>
         </Flex>
       </Grid>
     </Flex>
