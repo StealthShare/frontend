@@ -65,29 +65,6 @@ export const UserContextProvider = ({
         address: account
       });
 
-      // const res2 = await axios.get(
-      //   `${API_URL}/${"0xDbe6A499ba17d20Da94b217873E482A8B375F96d"}/download`,
-      //   {
-      //     headers: {
-      //       "x-access-token": res.data
-      //     }
-      //   }
-      // );
-
-      // const blob = new Blob([res2.data.files], {
-      //   type: "image/png;charset:utf-8"
-      // });
-      // const fr = new FileReader();
-      // fr.onload = () => {
-      //   const linkSource = fr.result;
-      //   const downloadLink = document.createElement("a");
-      //   const fileName = res2.data.filename;
-      //   downloadLink.href = `data:image/png;charset:utf-8;base64,${res2.data.files}`;
-      //   downloadLink.download = fileName;
-      //   downloadLink.click();
-      // };
-      // fr.readAsDataURL(blob);
-
       setJWT(res.data);
       dispatchUser({ type: "LOGIN" });
     } catch (error) {

@@ -6,6 +6,7 @@ import { CartIcon } from "../../../icons/CartIcon";
 import { HomeIcon } from "../../../icons/HomeIcon";
 import { UserIcon } from "../../../icons/UserIcon";
 import { useCartContext } from "../../../provider/cart/CartContext";
+import { currencyFormatter } from "../../../utils/currencyFormatter";
 import { CartTooltip } from "../../pages/cart/CartTooltip/cartTooltip";
 import { PageContainer } from "../../shared/containers/PageContainer";
 import { ActiveLinkIndicator } from "./ActiveLinkIndicator";
@@ -15,7 +16,7 @@ import { Navitem } from "./Navitem";
 export const Navbar = () => {
   const [homeIconColor, setHomeIconColor] = useState<string>("white");
 
-  const { cartData } = useCartContext();
+  const { cartData, price } = useCartContext();
   const { pathname } = useLocation();
 
   const { scrollPosition } = useScrollPosition();
@@ -78,11 +79,7 @@ export const Navbar = () => {
                     color="white"
                     fontWeight="600"
                   >
-                    $
-                    {cartData
-                      ? cartData.map((i) => i.price).reduce((a, b) => a + b)
-                      : 0}
-                    .00
+                    {currencyFormatter(price)}
                   </Text>
                 </Flex>
               </Link>

@@ -8,9 +8,10 @@ import { Heading } from "../components/shared/Heading";
 import { BookmarkIcon } from "../icons/BookmarkIcon";
 import { useCartContext } from "../provider/cart/CartContext";
 import { useUserContext } from "../provider/user/UserContext";
+import { currencyFormatter } from "../utils/currencyFormatter";
 
 export const Cart = () => {
-  const { cartData, deleteItemByAddress, clearCart } = useCartContext();
+  const { cartData, deleteItemByAddress, clearCart, price } = useCartContext();
 
   return (
     <>
@@ -113,7 +114,7 @@ export const Cart = () => {
                               $
                             </Box>
                             <Box fontFamily="Inter">
-                              {item.price.toFixed(2)}
+                              {currencyFormatter(item.price).slice(1)}
                             </Box>
                           </Flex>
                         </Flex>
@@ -127,7 +128,7 @@ export const Cart = () => {
                   <Flex justifyContent="space-between">
                     <Box fontFamily="Inter">Total: </Box>
                     <Box fontWeight="bold" fontSize="20px">
-                      {cartData.map((i) => i.price).reduce((a, b) => a + b)}.00$
+                      {currencyFormatter(price)}
                     </Box>
                   </Flex>
 
