@@ -111,7 +111,7 @@ export const Sell = () => {
 
   return (
     <PageContainer>
-      <Grid mt="30px" mb="60px" templateColumns="1fr 400px" gap="80px">
+      <Grid mt="40px" mb="60px" templateColumns="1fr 400px" gap="80px">
         <Flex h="100vh" flexDir="column" gap="40px">
           <Heading text="Sell files" />
           <Flex flexDir="column">
@@ -119,36 +119,38 @@ export const Sell = () => {
               stage == ListingStage.MINT_TOKEN) && (
               <Flex flexDir="column" gap="20px" fontSize="18px">
                 <Flex flexDir="column" gap="8px">
-                <Text>Name</Text>
-                <CustomInput
-                p="13px 16px"
-                  placeholder="Token name"
-                  disabled={loading}
-                  value={tokenName}
-                  onChange={(e: any) => setTokenName(e.target.value)}
+                  <Text>Name</Text>
+                  <CustomInput
+                    p="13px 16px"
+                    placeholder="Token name"
+                    disabled={loading}
+                    value={tokenName}
+                    onChange={(e: any) => setTokenName(e.target.value)}
                   />
-                  </Flex>
-
-                <Flex flexDir="column" gap="8px">
-                <Text >Description</Text>
-                <CustomInput
-                p="13px 16px"
-                  placeholder="Token description"
-                  disabled={loading}
-                  value={tokenDescription}
-                  onChange={(e: any) => setTokenDescription(e.target.value)}
-                />
                 </Flex>
 
                 <Flex flexDir="column" gap="8px">
-                <Text>Supply</Text>
-                <CustomInput
-                p="13px 16px"
-                  disabled={loading}
-                  value={tokenSupply}
-                  type="number"
-                  onChange={(e: any) => setTokenSupply(Number(e.target.value))}
-                />
+                  <Text>Description</Text>
+                  <CustomInput
+                    p="13px 16px"
+                    placeholder="Token description"
+                    disabled={loading}
+                    value={tokenDescription}
+                    onChange={(e: any) => setTokenDescription(e.target.value)}
+                  />
+                </Flex>
+
+                <Flex flexDir="column" gap="8px">
+                  <Text>Supply</Text>
+                  <CustomInput
+                    p="13px 16px"
+                    disabled={loading}
+                    value={tokenSupply}
+                    type="number"
+                    onChange={(e: any) =>
+                      setTokenSupply(Number(e.target.value))
+                    }
+                  />
                 </Flex>
 
                 <Button

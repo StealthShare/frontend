@@ -10,11 +10,13 @@ export const Marketplace = () => {
 
   return (
     <PageContainer>
-      <Heading text="Marketplace" />
-      <Grid templateColumns="9fr 2fr" mt="20px" gap="50px">
-        <LeftSection activeGrid={activeGrid} />
-        <RightSection activeGrid={activeGrid} setActiveGrid={setActiveGrid} />
-      </Grid>
+      <Flex flexDir="column" mt="40px">
+        <Heading text="Marketplace" />
+        <Grid templateColumns="9fr 2fr" mt="20px" gap="50px">
+          <LeftSection activeGrid={activeGrid} />
+          <RightSection activeGrid={activeGrid} setActiveGrid={setActiveGrid} />
+        </Grid>
+      </Flex>
     </PageContainer>
   );
 };
