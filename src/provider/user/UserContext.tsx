@@ -3,7 +3,9 @@ import React, { createContext, useContext, useReducer } from "react";
 import useLocalStorage from "use-local-storage";
 import { API_URL } from "../../constants";
 import { userReducer } from "./userReducer";
-import { ethers } from "ethers";
+import { Block, ethers } from "ethers";
+//@ts-ignore
+import { saveAs } from "file-saver";
 
 interface IUserContext {
   isLoggedIn: boolean;
@@ -64,7 +66,7 @@ export const UserContextProvider = ({
       });
 
       const res2 = await axios.get(
-        `${API_URL}/${"0x9ADe7B7c9B57CE317e0e471950CE67307D7fD91e"}/download`,
+        `${API_URL}/${"0xDbe6A499ba17d20Da94b217873E482A8B375F96d"}/download`,
         {
           headers: {
             "x-access-token": res.data
@@ -72,16 +74,19 @@ export const UserContextProvider = ({
         }
       );
 
-      // const res3 = await axios.get(
-      //   `${API_URL}/${"0x6f07465bD94A4e12ee77905EB6477497f0AaBcA7"}/listings`,
-      //   {
-      //     headers: {
-      //       "x-access-token": res.data
-      //     }
-      //   }
-      // );
-
-      console.log(res2);
+      const blob = new Blob([res2.data.files], {
+        type: "image/png;charset:utf-8"
+      });
+      const fr = new FileReader();
+      fr.onload = () => {
+        const linkSource = fr.result;
+        const downloadLink = document.createElement("a");
+        const fileName = res2.data.filename;
+        downloadLink.href = `data:image/png;charset:utf-8;base64,${res2.data.files}`;
+        downloadLink.download = fileName;
+        downloadLink.click();
+      };
+      fr.readAsDataURL(blob);
 
       setJWT(res.data);
       dispatchUser({ type: "LOGIN" });
