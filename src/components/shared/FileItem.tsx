@@ -74,7 +74,6 @@ export const FileItem: FC<IFileItem> = ({ category, imageUrl, name, price, size,
         <Flex  right="0px"
             pos="absolute" display='none' padding="10px" transform="translate(10px,-10px)" bg="#282939" _groupHover={{ display: "block",  bg: '#2d2f3b' }}>
           <Flex
-         
             alignItems="center"
             border="1px solid"
             boxSize="44px"
