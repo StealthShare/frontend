@@ -6,6 +6,7 @@ import { CartIcon } from "../../../icons/CartIcon";
 import { HomeIcon } from "../../../icons/HomeIcon";
 import { UserIcon } from "../../../icons/UserIcon";
 import { useCartContext } from "../../../provider/cart/CartContext";
+import { useUserContext } from "../../../provider/user/UserContext";
 import { currencyFormatter } from "../../../utils/currencyFormatter";
 import { CartTooltip } from "../../pages/cart/CartTooltip/cartTooltip";
 import { PageContainer } from "../../shared/containers/PageContainer";
@@ -18,6 +19,7 @@ export const Navbar = () => {
 
   const { cartData, price } = useCartContext();
   const { pathname } = useLocation();
+  const { jwt } = useUserContext();
 
   const { scrollPosition } = useScrollPosition();
 
@@ -52,13 +54,14 @@ export const Navbar = () => {
             />
           </Link>
           <Flex gap="37px" align="center">
-            
             <Flex gap="32px" align="center" _hover={{ color: "brandPrimary" }}>
               <Navitem text="Marketplace" location="/marketplace" />
               <Box w="1px" h="18px" bgColor="#383A56" />
               <Navitem text="Sell" location="/sell" />
               <Box w="1px" h="18px" bgColor="#383A56" />
-              <Navitem text="Inventory" location="/inventory" />
+              {jwt !== null && (
+                <Navitem text="Inventory" location="/inventory" />
+              )}
             </Flex>
             <Flex align="center" gap="31px">
               <ConnectButton />

@@ -29,7 +29,9 @@ export const Cart = () => {
   return (
     <>
       <PageContainer>
-        <Heading text={"Your shopping cart"} />
+        <Flex mt="40px">
+          <Heading text={"Your shopping cart"} />
+        </Flex>
         <>
           {cartData !== null ? (
             <Flex mt="40px" flexDir="column" gap="20px">
@@ -113,7 +115,7 @@ export const Cart = () => {
                               boxSize="40px"
                               borderRadius="50%"
                               _hover={{ bg: "rgba(255,255,255,0.2)" }}
-                              onClick={() => removeOneByAddress(item.address)}
+                              onClick={() => removeOneByAddress(item._id)}
                             >
                               <MinusIcon />
                             </Flex>
@@ -137,7 +139,7 @@ export const Cart = () => {
                             boxSize="40px"
                             borderRadius="50%"
                             _hover={{ bg: "rgba(255,255,255,0.2)" }}
-                            onClick={() => deleteItemByAddress(item.address)}
+                            onClick={() => deleteItemByAddress(item._id)}
                           >
                             <Image src="/assets/icons/trashcan.svg" />
                           </Flex>
