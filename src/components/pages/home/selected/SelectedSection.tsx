@@ -1,5 +1,5 @@
 import { Flex, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRightIcon } from "../../../../icons/ArrowRightIcon";
 import { PageContainer } from "../../../shared/containers/PageContainer";
@@ -7,6 +7,14 @@ import { FileItem } from "../../../shared/FileItem";
 import { HeadingSmall } from "../../../shared/HeadingSmall";
 
 export const SelectedSection = () => {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      (ref.current as any).scrollLeft = (ref.current as any).scrollWidth;
+    }
+  }, [ref.current]);
+
   return (
     <Flex flexDir="column" gap="30px" zIndex="1">
       <PageContainer>
@@ -21,6 +29,7 @@ export const SelectedSection = () => {
         </Flex>
       </PageContainer>
       <Flex
+        ref={ref}
         gap="17px"
         overflowY="auto"
         maxW="100vw"
