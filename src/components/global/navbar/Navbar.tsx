@@ -55,8 +55,8 @@ export const Navbar = () => {
           </Link>
           <Flex gap="37px" align="center">
             <Flex gap="32px" align="center" _hover={{ color: "brandPrimary" }}>
-              <Navitem text="Marketplace" location="/marketplace" />
-              <Box w="1px" h="18px" bgColor="#383A56" />
+              {/* <Navitem text="Marketplace" location="/marketplace" />
+              <Box w="1px" h="18px" bgColor="#383A56" /> */}
               <Navitem text="Sell" location="/sell" />
               <Box w="1px" h="18px" bgColor="#383A56" />
               {jwt !== null && (
