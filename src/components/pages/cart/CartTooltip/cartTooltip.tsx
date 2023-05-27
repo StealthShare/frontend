@@ -1,8 +1,10 @@
 import { Box, Button, Flex } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HeadingSmall } from "../../../shared/HeadingSmall";
 
 export const CartTooltip = () => {
+  const navigate = useNavigate();
+
   return (
     <Flex
       display="none"
@@ -29,11 +31,9 @@ export const CartTooltip = () => {
         <Box fontSize="16px" color="white">
           Looking for inspiration?
         </Box>
-        <Link to="/marketplace">
-          <Button px="70px" mt="30px">
-            Go to marketplace
-          </Button>
-        </Link>
+        <Button px="70px" mt="30px" onClick={() => navigate("/marketplace")}>
+          Go to marketplace
+        </Button>
       </Flex>
     </Flex>
   );
