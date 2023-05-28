@@ -15,6 +15,7 @@ import { BookmarkIcon } from "../icons/BookmarkIcon";
 import { useCartContext } from "../provider/cart/CartContext";
 import { useUserContext } from "../provider/user/UserContext";
 import { currencyFormatter } from "../utils/currencyFormatter";
+import { fileSizeFormatter } from "../utils/fileSizeFormatter";
 
 export const Cart = () => {
   const {
@@ -26,15 +27,16 @@ export const Cart = () => {
     removeOneByAddress
   } = useCartContext();
 
-
   const buyTokens = () => {
-    if(cartData) {
-      console.log(cartData)
-      const tokens = cartData.map((token) => {return token.address }) 
+    if (cartData) {
+      console.log(cartData);
+      const tokens = cartData.map((token) => {
+        return token.address;
+      });
 
-      console.log(tokens)
+      console.log(tokens);
     }
-  }
+  };
 
   return (
     <>
@@ -113,7 +115,7 @@ export const Cart = () => {
                             gap="10px"
                           >
                             <Image src="/assets/icons/hard-drive.svg" />{" "}
-                            {item.size + " GB"}
+                            {fileSizeFormatter(item.size)}
                           </Flex>
                         </Flex>
                         <Flex align="center" gap="50px">
