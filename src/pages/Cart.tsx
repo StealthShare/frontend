@@ -16,9 +16,13 @@ import { BookmarkIcon } from "../icons/BookmarkIcon";
 import { useCartContext } from "../provider/cart/CartContext";
 import { useUserContext } from "../provider/user/UserContext";
 import { currencyFormatter } from "../utils/currencyFormatter";
+<<<<<<< HEAD
 import {ethers} from "ethers";
 import { ERC20_ABI } from "../abi/erc20";
 import { MARKET_ABI } from "../abi/market";
+=======
+import { fileSizeFormatter } from "../utils/fileSizeFormatter";
+>>>>>>> a4c97c7419d0cb0d68aebd57576a12d49c95009e
 
 export const Cart = () => {
   const {
@@ -30,6 +34,7 @@ export const Cart = () => {
     removeOneByAddress
   } = useCartContext();
 
+<<<<<<< HEAD
 
 
 
@@ -68,8 +73,18 @@ export const Cart = () => {
 
       }
      
+=======
+  const buyTokens = () => {
+    if (cartData) {
+      console.log(cartData);
+      const tokens = cartData.map((token) => {
+        return token.address;
+      });
+
+      console.log(tokens);
+>>>>>>> a4c97c7419d0cb0d68aebd57576a12d49c95009e
     }
-  }
+  };
 
   return (
     <>
@@ -148,7 +163,7 @@ export const Cart = () => {
                             gap="10px"
                           >
                             <Image src="/assets/icons/hard-drive.svg" />{" "}
-                            {item.size + " GB"}
+                            {fileSizeFormatter(item.size)}
                           </Flex>
                         </Flex>
                         <Flex align="center" gap="50px">
