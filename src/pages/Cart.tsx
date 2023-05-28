@@ -16,13 +16,10 @@ import { BookmarkIcon } from "../icons/BookmarkIcon";
 import { useCartContext } from "../provider/cart/CartContext";
 import { useUserContext } from "../provider/user/UserContext";
 import { currencyFormatter } from "../utils/currencyFormatter";
-<<<<<<< HEAD
-import {ethers} from "ethers";
+import { ethers } from "ethers";
 import { ERC20_ABI } from "../abi/erc20";
 import { MARKET_ABI } from "../abi/market";
-=======
 import { fileSizeFormatter } from "../utils/fileSizeFormatter";
->>>>>>> a4c97c7419d0cb0d68aebd57576a12d49c95009e
 
 export const Cart = () => {
   const {
@@ -34,55 +31,50 @@ export const Cart = () => {
     removeOneByAddress
   } = useCartContext();
 
-<<<<<<< HEAD
-
-
-
-
   const buyTokens = async () => {
-    if(cartData) {
-      try {
-        const tokens = cartData.map((token) => {return token.address }) 
-        const amounts = cartData.map((token) => {return token.amount }) 
-        const paymentToken = USDC_TOKEN_ADDRESS;
-  
-        const provider = new ethers.BrowserProvider((window as any).ethereum);
-  
-        const singer = await provider.getSigner();
-  
-        const paymentTokenContract = new ethers.Contract(paymentToken, ERC20_ABI , singer)
-        
-        
-        const tx = await paymentTokenContract.approve(MARKET_ADDRESS, price);
-        
-        await tx.wait()
-
-        const marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI , singer)
-
-        const tx2 = await marketContract.buyToken(tokens, amounts, paymentToken)
-        clearCart()
-        alert("accepted")
-
-        await tx2.wait()
-
-   
-  
-        console.log(tokens)
-        console.log(amounts)
-      } catch(error) {
-
-      }
-     
-=======
-  const buyTokens = () => {
     if (cartData) {
-      console.log(cartData);
-      const tokens = cartData.map((token) => {
-        return token.address;
-      });
+      try {
+        const tokens = cartData.map((token) => {
+          return token.address;
+        });
+        const amounts = cartData.map((token) => {
+          return token.amount;
+        });
+        const paymentToken = USDC_TOKEN_ADDRESS;
 
-      console.log(tokens);
->>>>>>> a4c97c7419d0cb0d68aebd57576a12d49c95009e
+        const provider = new ethers.BrowserProvider((window as any).ethereum);
+
+        const singer = await provider.getSigner();
+
+        const paymentTokenContract = new ethers.Contract(
+          paymentToken,
+          ERC20_ABI,
+          singer
+        );
+
+        const tx = await paymentTokenContract.approve(MARKET_ADDRESS, price);
+
+        await tx.wait();
+
+        const marketContract = new ethers.Contract(
+          MARKET_ADDRESS,
+          MARKET_ABI,
+          singer
+        );
+
+        const tx2 = await marketContract.buyToken(
+          tokens,
+          amounts,
+          paymentToken
+        );
+        clearCart();
+        alert("accepted");
+
+        await tx2.wait();
+
+        console.log(tokens);
+        console.log(amounts);
+      } catch (error) {}
     }
   };
 
