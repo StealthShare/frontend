@@ -11,19 +11,28 @@ interface ILeftSectionProps {
   activeGrid: string;
   download?: boolean;
   placeholder: string;
+  filteredListings: any;
+  setFilteredListings: any;
 }
 
-export const LeftSection: FC<ILeftSectionProps> = ({ activeGrid, download = false, placeholder }) => {
+export const LeftSection: FC<ILeftSectionProps> = ({
+  activeGrid,
+  download = false,
+  placeholder,
+  filteredListings,
+  setFilteredListings
+}) => {
+  const [inputValue, setInputValue] = useState<string>("");
   const { listings } = useListingContext();
-  const [inputValue, setInputValue] = useState<string>('');
-
-  const [filteredListings, setFilteredListings] = useState<any[]>(listings);
 
   const [search, setSearch] = useSearchParams();
 
   const navigate = useNavigate();
 
   const handleInputChange = (e: any) => {
+    if(listings) {
+
+    
     setInputValue(e.target.value);
     console.log(
       listings
@@ -38,6 +47,7 @@ export const LeftSection: FC<ILeftSectionProps> = ({ activeGrid, download = fals
         return name.includes(e.target.value);
       });
     setFilteredListings(listings.filter((listing: any) => matchingNames.includes(listing.name)));
+  }
   };
 
   useEffect(() => {
@@ -83,7 +93,7 @@ export const LeftSection: FC<ILeftSectionProps> = ({ activeGrid, download = fals
       </InputGroup>
 
       <Grid gap="20px" flexWrap="wrap" templateColumns={(activeGrid as any) == 'small' ? '1fr' : 'repeat(4, 1fr)'}>
-        {filteredListings.map((item, index) => {
+        {filteredListings.map((item :any, index : any) => {
           return (
             <FileItem
               key={item._id}

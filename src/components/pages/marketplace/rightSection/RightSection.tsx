@@ -4,6 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { categories } from '../../../../constants/categories';
 import { GridBigIcon } from '../../../../icons/GridBigIcon';
 import { GridSmallIcon } from '../../../../icons/GridSmallIcon';
+import { useListingContext } from '../../../../provider/listings/ListingsContext';
 import { CustomInput } from '../../../shared/CustomInput';
 import { CustomSelect } from '../../../shared/CustomSelect';
 import { CategoryItem } from './CategoryItem';
@@ -12,29 +13,47 @@ import { NumInput } from './NumInput';
 interface IRightSectionProps {
   activeGrid: string;
   setActiveGrid: any;
+  filteredListings: any;
+  setFilteredListings: any;
 }
 
-export const RightSection: FC<IRightSectionProps> = ({ activeGrid, setActiveGrid }) => {
-  const [activeCategory, setActiveCategory] = useState<string>('all');
+export const RightSection: FC<IRightSectionProps> = ({
+  activeGrid,
+  setActiveGrid,
+  filteredListings,
+  setFilteredListings
+}) => {
+  const [activeCategory, setActiveCategory] = useState<string>("all");
   const [category, setCategory] = useSearchParams();
   const navigate = useNavigate();
-  const tag = category.get('tag');
-  const search = category.get('search') ?? '';
+  const tag = category.get("tag");
+  const search = category.get("search") ?? "";
+  const cat = category.get("category") ?? "";
+  const [minPrice, setMinPrice] = useState<string>("");
+  const [maxPrice, setMaxPrice] = useState<string>("");
+  const { listings } = useListingContext();
 
   useEffect(() => {
-    if (category.get('category') !== null) {
-      setActiveCategory(category.get('category')!);
-      // const matchingNames = listings
-      //   .map((listing: any) => listing.name)
-      //   .filter((name: string) => {
-      //     return name.includes(category.get("category") as string);
-      //   });
-      // setFilteredListings(
-      //   listings.filter((listing: any) => matchingNames.includes(listing.name))
-      // );
+    if (
+      category.get("category") !== null ||
+      (minPrice !== "" && maxPrice !== "")
+    ) {
+      setActiveCategory(category.get("category")!);
+      const matchingPrices = filteredListings
+        .map((listing: any) => listing.price)
+        .filter((price: number) => {
+          return price >= +minPrice && price <= +maxPrice;
+        });
+      console.log("filtered", filteredListings);
+      console.log("prices", matchingPrices);
+      setFilteredListings(
+        filteredListings.filter((listing: any) => {
+          return matchingPrices === listing.price;
+        })
+      );
     } else {
-      // console.log("No search");
-      // setFilteredListings(listings);
+      console.log("No search");
+      setFilteredListings(filteredListings);
     }
   }, [category]);
 
@@ -87,37 +106,59 @@ export const RightSection: FC<IRightSectionProps> = ({ activeGrid, setActiveGrid
             ))}
           </Flex>
         </Flex>
-        <Box h="1px" w="100%" bgColor="#262626" />
-        <Flex mt="16px" flexDir="column" gap="12px">
-          <Flex flexDir="column">
-            <Grid templateColumns="1fr 20px 1fr" w="100%" alignItems="center" gap="11px">
-              <CustomInput
-                type="number"
-                icon={
-                  <Box fontWeight="800" opacity="0.5" fontSize="22px" lineHeight="100%" mb="2px">
-                    $
-                  </Box>
-                }
-                h="40px"
-                
-                placeholder="Min"
-              />
-              <Text fontFamily="Inter" fontSize="12px" fontWeight="300" color="#73767D">
-                to
-              </Text>
-              <CustomInput
-                type="number"
-                icon={
-                  <Box fontWeight="800" opacity="0.5" fontSize="22px" lineHeight="100%" mb="2px">
-                    $
-                  </Box>
-                }
-                h="40px"
-                placeholder="Max"
-              />
-            </Grid>
+        <Flex flexDir="column">
+          <Flex align="center" gap="11px" justify="space-between">
+            <NumInput
+              placeholder="min"
+              value={minPrice}
+              onChange={(e: any) => {
+                setMinPrice(e.target.value);
+              }}
+              type="number"
+            />
+            <Text
+              fontFamily="Inter"
+              fontSize="12px"
+              fontWeight="300"
+              color="#73767D"
+            >
+              to
+            </Text>
+            <NumInput
+              placeholder="max"
+              value={maxPrice}
+              onChange={(e: any) => {
+                setMaxPrice(e.target.value);
+              }}
+              type="number"
+            />
           </Flex>
         </Flex>
+        <Button
+          onClick={() => {
+            const matchingPrices = filteredListings
+              .map((listing: any) => listing.price)
+              .filter((price: number) => {
+                return price >= +minPrice && price <= +maxPrice;
+              });
+            console.log("filtered", filteredListings);
+            console.log("prices", matchingPrices);
+            setFilteredListings(
+              filteredListings.filter((listing: any) => {
+                return matchingPrices === listing.price;
+              })
+            );
+            navigate(
+              `/marketplace?search=${search}${
+                cat !== null ? `&category=${cat}` : ""
+              }${tag !== null ? `&tag=${tag}` : ""}${
+                minPrice !== "" ? `&min=${minPrice}` : ""
+              }${maxPrice !== "" ? `&max=${maxPrice}` : ""}`
+            );
+          }}
+        >
+          Apply
+        </Button>
       </Flex>
     </Flex>
   );
