@@ -81,7 +81,7 @@ export const SearchSection = () => {
             borderRadius="0"
             borderX="0"
             _focus={{
-              border: "1px solid rgba(255, 255, 255, 0.17) !important",
+              borderY: "1px solid rgba(255, 255, 255, 0.17) !important",
               outline: "none !important"
             }}
             onChange={(e: any) => setCategorySelect(e.target.value)}
@@ -95,6 +95,7 @@ export const SearchSection = () => {
             h="69px"
             placeholder="Select tags"
             borderRadius="0"
+ 
             _focus={{
               border: "1px solid rgba(255, 255, 255, 0.17) !important",
               outline: "none !important"
@@ -112,7 +113,7 @@ export const SearchSection = () => {
         <Button
           borderRightRadius="8px"
           borderLeftRadius="0"
-          boxSize="73px"
+          boxSize="69px"
           onClick={() => {
             if (inputValue.length > 0)
               navigate(
