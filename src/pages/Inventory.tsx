@@ -12,12 +12,27 @@ export const Inventory = () => {
   const [activeGrid, setActiveGrid] = useState<string>("big");
   const { jwt } = useUserContext();
   const navigate = useNavigate();
-  const { listings } = useListingContext();
+  const inventory =
+    localStorage.getItem("inventory") !== null
+      ? JSON.parse(localStorage.getItem("inventory")!.toString())
+      : [];
+  const [listings, setListings] = useState<any>();
   const [filteredListings, setFilteredListings] = useState<any[]>(listings);
+  const { listings: l } = useListingContext();
 
   useEffect(() => {
     if (jwt === null) navigate("/");
   }, [jwt]);
+
+  useEffect(() => {
+    var pom: any[] = [];
+    inventory?.forEach((i: any) => {
+      l.forEach((listing: any) => {
+        if (i.token === listing.token) pom.push(listing);
+      });
+    });
+    setListings(pom);
+  }, []);
 
   return (
     <PageContainer>
