@@ -26,13 +26,18 @@ export const Inventory = () => {
 
   useEffect(() => {
     var pom: any[] = [];
+
+    const addresses = inventory.map((item: any) => item.token);
+
+    const x = l.filter((l) => addresses.includes(l.token));
+    console.log(x);
     inventory?.forEach((i: any) => {
       l.forEach((listing: any) => {
-        if (i.token === listing.token) pom.push(listing);
+        if (addresses.includes(i.token)) pom.push(listing);
       });
     });
-    setListings(pom);
-  }, []);
+    setListings(x);
+  }, [l]);
 
   return (
     <PageContainer>
@@ -49,7 +54,7 @@ export const Inventory = () => {
             placeholder={"Search in your inventory"}
             activeGrid={activeGrid}
             download
-            filteredListings={filteredListings}
+            filteredListings={listings}
             setFilteredListings={setFilteredListings}
           />
         </Grid>
