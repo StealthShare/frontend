@@ -55,7 +55,6 @@ export const Cart = () => {
 
         await tx.wait();
 
-<<<<<<< HEAD
         const marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, singer);
 
         const tx2 = await marketContract.buyToken(tokens, amounts, paymentToken);
@@ -71,23 +70,6 @@ export const Cart = () => {
       } catch (error) {} finally {
         setLoading(false)
       }
-=======
-        const marketContract = new ethers.Contract(
-          MARKET_ADDRESS,
-          MARKET_ABI,
-          singer
-        );
-
-        const tx2 = await marketContract.buyToken(
-          tokens,
-          amounts,
-          paymentToken
-        );
-        clearCart();
-
-        await tx2.wait();
-      } catch (error) {}
->>>>>>> e5fe3d1f722baca6fb2d53a2626ae78b3c69f3d4
     }
   };
 
