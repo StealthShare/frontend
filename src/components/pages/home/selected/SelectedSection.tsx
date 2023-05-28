@@ -60,6 +60,7 @@ export const SelectedSection = () => {
                 imageUrl={item.image}
                 name={item.name}
                 price={item.price}
+                type={item.type}
                 size={item.size}
                 peers={213}
                 token={item.token}

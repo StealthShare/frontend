@@ -1,4 +1,4 @@
-import { Button, Flex, Text } from '@chakra-ui/react';
+import { Button, Flex, Spinner, Text } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
@@ -46,6 +46,7 @@ export const FileUpload = ({
   }, [filesAmount]);
 
   const upload = async () => {
+    setLoading(true)
     axios
       .post(`${API_URL}/${mintedTokenAddress}/uploadFile`, formData, {
         headers: {
@@ -54,11 +55,13 @@ export const FileUpload = ({
         },
       })
       .then(() => {
-        setStage(ListingStage.FILL_LISTING_DATA);
+        setStage(ListingStage.LIST_ON_MARKETPLACE);
       })
       .catch(error => {
         console.log(error);
-      });
+      }).finally(() => {
+        setLoading(false)
+      })
   };
 
   return (
@@ -68,8 +71,9 @@ export const FileUpload = ({
           <Flex
             color="white"
             border="1px solid #262626"
+            opacity={loading ? "0.5" : "1"}
             p="20px"
-            cursor="pointer"
+            cursor={loading ? "defaut" :  "pointer"}
             bgColor="rgba(0, 0, 0, 0.25)"
             borderRadius="8px"
             _hover={{ bgColor: 'rgba(10, 10, 10, 0.25)' }}
@@ -77,7 +81,7 @@ export const FileUpload = ({
             align={files !== null ? 'flex-start' : 'center'}
             justify="center"
           >
-            {files === null && <Text>Drop files here</Text>}
+            {files === null && <Text>Drop your files here</Text>}
             {files !== null && (
               <Flex flexDir="column" w="100%" gap="4px">
                 {Array.from(files as any).map((file: any) => (
@@ -100,8 +104,8 @@ export const FileUpload = ({
         name="file"
         fileOrFiles={files}
       />
-      <Button mt="20px" isDisabled={filesAmount == 0} onClick={upload}>
-        Upload files
+      <Button mt="20px" isDisabled={filesAmount == 0 || loading} onClick={upload}>
+        {loading ? <Spinner/> : "Upload files"}
       </Button>
     </Flex>
   );

@@ -12,6 +12,8 @@ interface IListing {
   image: string;
   description: string;
   size: number;
+  type: string,
+  tags: string[]
 }
 
 interface IListingContext {
@@ -33,7 +35,6 @@ export const ListingContextProvider = ({
 }) => {
   const [listings, setListings] = useState<IListing[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const { jwt } = useUserContext();
   const getListings = async () => {
     setLoading(true);
     console.log(true);

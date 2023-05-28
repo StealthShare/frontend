@@ -22,15 +22,15 @@ export const CartTooltip = () => {
       <Flex
         align="center"
         borderRadius="8px"
-        padding="29px 33px"
+        padding={cartData ? "14px 33px" : "29px 33px"}
         border="1px solid"
         borderColor="rgba(255, 255, 255, 0.17)"
         right="0"
         flexDir="column"
         bg="backgroundMain"
-        maxH="25vh"
+        maxH={cartData ? "25vh" : "auto"}
         minW="25vw"
-        overflow="auto"
+        overflow={cartData ? "auto" : "initial"}
       >
         {cartData === null ? (
           <>
@@ -57,6 +57,7 @@ export const CartTooltip = () => {
                   //bgColor="rgba(255, 255, 255, 0.12)"
                   borderColor="rgba(255, 255, 255, 0.2)"
                   padding="16px "
+                  paddingX="0"
                   borderRadius="0px"
                   w="100%"
                   color="white"
@@ -65,7 +66,7 @@ export const CartTooltip = () => {
                   justify="space-between"
                 >
                   <Flex align="center" gap="14px">
-                  <Image src={item.imageUrl} borderRadius="8px" w="20%"/>
+                  <Box boxSize="40px" bgPos='center' bgSize="cover" bgImage={item.imageUrl} borderRadius="8px"/>
                   <Flex flexDir="column" gap="4px">
                     <Text fontWeight="700">{item.name}</Text>
                     <Text fontSize="12px">{currencyFormatter(item.price * item.amount)}</Text>

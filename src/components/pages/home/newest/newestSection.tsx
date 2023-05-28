@@ -54,6 +54,7 @@ export const NewestSection = () => {
                 <FileItem
                   key={item._id}
                   isSmall
+                  type={item.type}
                   category="Games"
                   imageUrl={item.image}
                   name={item.name}

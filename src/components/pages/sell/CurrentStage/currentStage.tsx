@@ -76,16 +76,9 @@ export const CurrentStage = ({ stage, loading }: { stage: ListingStage; loading:
           active={stage == ListingStage.LIST_ON_MARKETPLACE}
           loading={loading}
           content={'List on marketplace'}
-         
+         last
         />
-        <Item
-          number={4}
-          completed={stage >= ListingStage.FINISHED}
-          active={stage == ListingStage.FINISHED}
-          loading={loading}
-          content={'Finish'}
-          last
-        />
+      
       </Flex>
     </Flex>
   );
