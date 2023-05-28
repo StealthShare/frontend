@@ -33,7 +33,7 @@ export interface CartItem {
   amount: number;
   address: string;
   imageUrl: string;
-  category: string;
+  type: string;
   name: string;
   price: number;
   size: number;

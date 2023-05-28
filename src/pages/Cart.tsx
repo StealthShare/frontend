@@ -134,14 +134,16 @@ export const Cart = () => {
                       <Flex justifyContent="space-between">
                         <Flex flexDir="column" gap="4px" justify="center">
                           <Flex
+                            justify="center"
                             align="center"
-                            textTransform="uppercase"
+                            borderRadius="2px"
+                            paddingX="6px"
                             fontSize="12px"
+                            fontWeight="500"
+                            bgColor="brandPrimary"
                             fontFamily="Inter"
-                            color="rgba(148, 150, 175, 1)"
-                            gap="10px"
                           >
-                            <BookmarkIcon /> {item.category}
+                            {item.type}
                           </Flex>
                           <Box fontFamily="Inter" fontSize="18px">
                             {item.name}
