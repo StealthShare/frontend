@@ -1,6 +1,7 @@
 import { Box, Button, Flex, Grid, Select, Text } from "@chakra-ui/react";
 import React, { FC, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { categories } from "../../../../constants/categories";
 import { GridBigIcon } from "../../../../icons/GridBigIcon";
 import { GridSmallIcon } from "../../../../icons/GridSmallIcon";
 import { CustomInput } from "../../../shared/CustomInput";
@@ -12,41 +13,6 @@ interface IRightSectionProps {
   activeGrid: string;
   setActiveGrid: any;
 }
-
-export const categories = [
-  {
-    text: "All",
-    value: "all"
-  },
-  {
-    text: "Apps",
-    value: "apps"
-  },
-  {
-    text: "Audios",
-    value: "audios"
-  },
-  {
-    text: "Games",
-    value: "games"
-  },
-  {
-    text: "Videos",
-    value: "videos"
-  },
-  {
-    text: "Docs",
-    value: "docs"
-  },
-  {
-    text: "Mobile",
-    value: "mobile"
-  },
-  {
-    text: "Porn",
-    value: "porn"
-  }
-];
 
 export const RightSection: FC<IRightSectionProps> = ({
   activeGrid,

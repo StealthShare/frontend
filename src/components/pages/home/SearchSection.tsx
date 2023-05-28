@@ -11,11 +11,11 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { categories } from "../../../constants/categories";
 import { SearchIcon } from "../../../icons/SearchIcon";
 import { useListingContext } from "../../../provider/listings/ListingsContext";
 import { CustomInput } from "../../shared/CustomInput";
 import { Heading } from "../../shared/Heading";
-import { categories } from "../marketplace/rightSection/RightSection";
 
 export const SearchSection = () => {
   const [inputValue, setInputValue] = useState<string>("");
