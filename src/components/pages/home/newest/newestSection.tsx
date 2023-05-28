@@ -10,6 +10,10 @@ import { HeadingSmall } from "../../../shared/HeadingSmall";
 export const NewestSection = () => {
   const { listings } = useListingContext();
 
+  const reversedListings = Array.from(listings).reverse();
+  console.log("listings", listings);
+  console.log("reversed", reversedListings);
+
   return (
     <Flex flexDir="column" gap="30px" mt="20px" zIndex="1">
       <PageContainer>
@@ -42,23 +46,26 @@ export const NewestSection = () => {
       >
         <Flex minW="calc((100vw - 1200px) / 2 - 17px)" h="100px"></Flex>
         {listings &&
-          listings.map((item, index) => {
-            return (
-              <FileItem
-                key={item._id}
-                isSmall
-                category="Games"
-                imageUrl={item.image}
-                name={item.name}
-                price={item.price}
-                size={item.size}
-                peers={213}
-                token={item.token}
-                address={item._id}
-                _id={item._id}
-              />
-            );
-          })}
+          Array.from(listings)
+            .reverse()
+            .slice(0, 15)
+            .map((item, index) => {
+              return (
+                <FileItem
+                  key={item._id}
+                  isSmall
+                  category="Games"
+                  imageUrl={item.image}
+                  name={item.name}
+                  price={item.price}
+                  size={item.size}
+                  peers={213}
+                  token={item.token}
+                  address={item._id}
+                  _id={item._id}
+                />
+              );
+            })}
         <Flex minW="calc((100vw - 1200px) / 2 - 17px)" h="100px"></Flex>
       </Flex>
     </Flex>

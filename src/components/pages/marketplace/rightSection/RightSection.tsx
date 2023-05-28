@@ -1,5 +1,6 @@
-import { Box, Button, Flex, Select, Text } from "@chakra-ui/react";
-import React, { FC, useState } from "react";
+import { Box, Button, Flex, Grid, Select, Text } from "@chakra-ui/react";
+import React, { FC, useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { GridBigIcon } from "../../../../icons/GridBigIcon";
 import { GridSmallIcon } from "../../../../icons/GridSmallIcon";
 import { CustomInput } from "../../../shared/CustomInput";
@@ -52,33 +53,64 @@ export const RightSection: FC<IRightSectionProps> = ({
   setActiveGrid
 }) => {
   const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [category, setCategory] = useSearchParams();
+  const navigate = useNavigate();
+  const tag = category.get("tag");
+  const search = category.get("search") ?? "";
+
+  useEffect(() => {
+    if (category.get("category") !== null) {
+      setActiveCategory(category.get("category")!);
+      // const matchingNames = listings
+      //   .map((listing: any) => listing.name)
+      //   .filter((name: string) => {
+      //     return name.includes(category.get("category") as string);
+      //   });
+      // setFilteredListings(
+      //   listings.filter((listing: any) => matchingNames.includes(listing.name))
+      // );
+    } else {
+      // console.log("No search");
+      // setFilteredListings(listings);
+    }
+  }, [category]);
 
   return (
     <Flex flexDir="column" gap="30px">
       <Flex justify="space-between" gap="9px">
-        <Flex
+        <Grid
           h="100%"
-          p="20px"
-          w="90px"
-          border="1px solid #262626"
+          border="1px solid rgba(255,255,255,0.2)"
           borderRadius="8px"
           bgColor="rgba(0, 0, 0, 0.25)"
-          justify="center"
-          align="center"
-          gap="20px"
+          justifyContent="center"
+          justifyItems="center"
+          templateColumns="1fr 1fr"
+          alignItems="center"
         >
-          <GridBigIcon
-            cursor="pointer"
-            color={activeGrid === "big" ? "white" : "#73767D"}
-            onClick={() => setActiveGrid("big")}
-          />
-          <GridSmallIcon
-            cursor="pointer"
-            color={activeGrid === "small" ? "white" : "#73767D"}
-            onClick={() => setActiveGrid("small")}
-          />
-        </Flex>
-        <CustomSelect placeholder="Sort files" />
+          <Flex
+            justify="center"
+            borderRight="1px solid rgba(255,255,255,0.2)"
+            align="center"
+            boxSize="71px"
+          >
+            <GridBigIcon
+              boxSize="20px"
+              cursor="pointer"
+              color={activeGrid === "big" ? "white" : "#73767D"}
+              onClick={() => setActiveGrid("big")}
+            />
+          </Flex>
+          <Flex justify="center" align="center" boxSize="71px">
+            <GridSmallIcon
+              boxSize="20px"
+              cursor="pointer"
+              color={activeGrid === "small" ? "white" : "#73767D"}
+              onClick={() => setActiveGrid("small")}
+            />
+          </Flex>
+        </Grid>
+        <CustomSelect placeholder="Sort by" />
       </Flex>
       <Box h="1px" w="100%" bgColor="#262626" />
       <Flex flexDir="column" gap="30px">
@@ -91,7 +123,12 @@ export const RightSection: FC<IRightSectionProps> = ({
               key={category.value}
               text={category.text}
               active={activeCategory === category.value}
-              onClick={() => setActiveCategory(category.value)}
+              onClick={() => {
+                setActiveCategory(category.value);
+                navigate(
+                  `/marketplace?search=${search}&category=${category.value}&tags=${tag}`
+                );
+              }}
             />
           ))}
         </Flex>
