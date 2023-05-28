@@ -86,7 +86,7 @@ export const LeftSection: FC<ILeftSectionProps> = ({
 
     var pom = listings;
     const matchingNames = pom
-      .map((listing: any) => listing.name)
+      ?.map((listing: any) => listing.name)
       .filter((name: string) => {
         return name.includes(e.target.value);
       });
@@ -104,7 +104,7 @@ export const LeftSection: FC<ILeftSectionProps> = ({
     if (search !== "") {
       setInputValue(search);
       const matchingNames = listings
-        .map((listing: any) => listing.name)
+        ?.map((listing: any) => listing.name)
         .filter((name: string) => {
           return name.includes(search);
         });
@@ -143,7 +143,7 @@ export const LeftSection: FC<ILeftSectionProps> = ({
           (activeGrid as any) == "small" ? "1fr" : "repeat(4, 1fr)"
         }
       >
-        {filteredListings.map((item: any, index: any) => {
+        {filteredListings?.map((item: any, index: any) => {
           return (
             <FileItem
               key={item._id}

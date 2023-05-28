@@ -52,12 +52,7 @@ export const Cart = () => {
     removeOneByAddress
   } = useCartContext();
 
-  const [inventory, setInventory] = useLocalStorage<any>(
-    "inventory",
-    localStorage.getItem("inventory") !== null
-      ? localStorage.getItem("inventory")
-      : []
-  );
+  const [inventory, setInventory] = useLocalStorage<any>("inventory", []);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [loading, setLoading] = useState<boolean>(false);
