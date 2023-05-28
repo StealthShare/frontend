@@ -11,10 +11,14 @@ import { NewestSection } from "../components/pages/home/newest/newestSection";
 import { LineContainer } from "../components/shared/containers/LineContainer";
 import { PageContainer } from "../components/shared/containers/PageContainer";
 import { Heading } from "../components/shared/Heading";
+import { MARKET_ADDRESS, USDC_TOKEN_ADDRESS } from "../constants";
 import { BookmarkIcon } from "../icons/BookmarkIcon";
 import { useCartContext } from "../provider/cart/CartContext";
 import { useUserContext } from "../provider/user/UserContext";
 import { currencyFormatter } from "../utils/currencyFormatter";
+import {ethers} from "ethers";
+import { ERC20_ABI } from "../abi/erc20";
+import { MARKET_ABI } from "../abi/market";
 
 export const Cart = () => {
   const {
@@ -27,12 +31,43 @@ export const Cart = () => {
   } = useCartContext();
 
 
-  const buyTokens = () => {
-    if(cartData) {
-      console.log(cartData)
-      const tokens = cartData.map((token) => {return token.address }) 
 
-      console.log(tokens)
+
+
+  const buyTokens = async () => {
+    if(cartData) {
+      try {
+        const tokens = cartData.map((token) => {return token.address }) 
+        const amounts = cartData.map((token) => {return token.amount }) 
+        const paymentToken = USDC_TOKEN_ADDRESS;
+  
+        const provider = new ethers.BrowserProvider((window as any).ethereum);
+  
+        const singer = await provider.getSigner();
+  
+        const paymentTokenContract = new ethers.Contract(paymentToken, ERC20_ABI , singer)
+        
+        
+        const tx = await paymentTokenContract.approve(MARKET_ADDRESS, price);
+        
+        await tx.wait()
+
+        const marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI , singer)
+
+        const tx2 = await marketContract.buyToken(tokens, amounts, paymentToken)
+        clearCart()
+        alert("accepted")
+
+        await tx2.wait()
+
+   
+  
+        console.log(tokens)
+        console.log(amounts)
+      } catch(error) {
+
+      }
+     
     }
   }
 

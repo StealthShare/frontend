@@ -12,9 +12,9 @@ export const Marketplace = () => {
     <PageContainer>
       <Flex flexDir="column" mt="40px">
         <Heading text="Marketplace" />
-        <Grid templateColumns="350px auto" mt="20px" gap="50px">
+        <Grid templateColumns="350px auto" mt="30px" gap="50px">
           <RightSection activeGrid={activeGrid} setActiveGrid={setActiveGrid} />
-          <LeftSection activeGrid={activeGrid} />
+          <LeftSection placeholder={"Search in StealthShare"} activeGrid={activeGrid} />
         </Grid>
       </Flex>
     </PageContainer>

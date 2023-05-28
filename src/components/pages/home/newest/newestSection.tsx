@@ -11,7 +11,7 @@ export const NewestSection = () => {
   const { listings } = useListingContext();
 
   return (
-    <Flex flexDir="column" gap="30px" zIndex="1">
+    <Flex flexDir="column" gap="30px" mt="20px" zIndex="1">
       <PageContainer>
         <Flex justify="space-between" align="center">
           <HeadingSmall text="Recent listings" />

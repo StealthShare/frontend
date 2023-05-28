@@ -20,9 +20,9 @@ export const Inventory = () => {
     <PageContainer>
       <Flex flexDir="column" mt="40px">
         <Heading text="Inventory" />
-        <Grid templateColumns="350px auto" mt="20px" gap="50px">
+        <Grid templateColumns="350px auto" mt="30px" gap="50px">
           <RightSection activeGrid={activeGrid} setActiveGrid={setActiveGrid} />
-          <LeftSection activeGrid={activeGrid} download />
+          <LeftSection placeholder={"Search in your inventory"} activeGrid={activeGrid} download />
         </Grid>
       </Flex>
     </PageContainer>

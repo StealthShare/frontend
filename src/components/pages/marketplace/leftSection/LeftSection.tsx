@@ -16,11 +16,13 @@ import { SmallGridFile } from "../rightSection/SmallGridFile";
 interface ILeftSectionProps {
   activeGrid: string;
   download?: boolean;
+  placeholder: string
 }
 
 export const LeftSection: FC<ILeftSectionProps> = ({
   activeGrid,
-  download = false
+  download = false,
+  placeholder
 }) => {
   const { listings } = useListingContext();
   const [inputValue, setInputValue] = useState<string>("");
@@ -71,7 +73,7 @@ export const LeftSection: FC<ILeftSectionProps> = ({
     <Flex flexDir="column" gap="30px">
       <InputGroup>
         <CustomInput
-          placeholder="Search in StealthShare"
+          placeholder={placeholder}
           value={inputValue}
           defaultValue={search.get("search")}
           onChange={(e: any) => handleInputChange(e)}

@@ -87,25 +87,25 @@ export const FileItem: FC<IFileItem> = ({
         minW={"220px"}
         maxW={isSmall ? "auto" : "268px"}
         maxH={isSmall ? "auto" : "200px"}
-        borderRadius="8px"
+        borderTopRadius="8px"
         pos="relative"
       >
         <Flex
-          justify="flex-end"
+          justify="flex-start"
           align="center"
           padding="0px 16px"
           pos="absolute"
           w="100%"
-          h="25%"
-          paddingTop="20px"
-          bg="linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(0,0,0,1) 100%)"
+          h="40%"
+          paddingTop="40px"
+          bg="linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(0,0,0,0.8) 100%)"
           bottom="0px"
         >
           <Flex gap="7px" align="center">
             <Box
               borderRadius="2px"
               paddingX="6px"
-              fontSize="10px"
+              fontSize="12px"
               fontWeight="500"
               bgColor="brandPrimary"
             >
@@ -114,7 +114,7 @@ export const FileItem: FC<IFileItem> = ({
             <Box
               borderRadius="2px"
               paddingX="6px"
-              fontSize="10px"
+              fontSize="12px"
               fontWeight="500"
               bgColor="gray"
             >

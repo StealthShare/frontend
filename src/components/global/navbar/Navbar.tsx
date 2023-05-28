@@ -2,6 +2,7 @@ import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useScrollPosition } from "../../../hooks/useScrollPosition";
+import { CartEmpty } from "../../../icons/CartEmpty";
 import { CartIcon } from "../../../icons/CartIcon";
 import { HomeIcon } from "../../../icons/HomeIcon";
 import { UserIcon } from "../../../icons/UserIcon";
@@ -69,7 +70,7 @@ export const Navbar = () => {
               <Link to="/cart">
                 <Flex align="center" pos="relative" role="group" gap="12px">
                   <CartTooltip />
-                  <CartIcon cursor="pointer" />
+                  {!cartData ? <CartEmpty cursor="pointer"/> : <CartIcon cursor="pointer" />}
                   <Text
                     fontFamily="inter"
                     fontSize="14px"
