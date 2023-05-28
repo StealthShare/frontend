@@ -112,7 +112,7 @@ export const RightSection: FC<IRightSectionProps> = ({
         </Grid>
         <CustomSelect placeholder="Sort by" />
       </Flex>
-      <Box h="1px" w="100%" bgColor="#262626" />
+      <Box h="1px" w="100%" bgColor="rgba(255,255,255,0.2)" />
       <Flex flexDir="column" gap="30px">
         <Text fontSize="18px" fontWeight="700">
           Categories

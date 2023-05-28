@@ -30,7 +30,7 @@ export const Carousel = () => {
   }, []);
 
   return (
-    <Flex flexDir="column" gap="25px">
+    <Flex flexDir="column" gap="25px" mb="15px">
       <HeadingSmall text="StealthShare News" />
       <Flex overflow="hidden" h="400px" pos="relative" bg="rgba(255,255,255,0.1)" borderRadius="16px" w="100%">
         <Flex

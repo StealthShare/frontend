@@ -22,7 +22,7 @@ export const ConnectButton = () => {
     <>
       {jwt !== null && (
         <Menu>
-          <MenuButton>
+          <MenuButton role="group">
             <Flex
               h="42px"
               w="42px"
@@ -31,7 +31,8 @@ export const ConnectButton = () => {
               border="1px solid #BA74F8"
               cursor="pointer"
               borderRadius="50%"
-              _hover={{ bgColor: "brandPrimary" }}
+        
+              _groupHover={{ bg: "brandPrimary" }}
             >
               <UserIcon />
             </Flex>

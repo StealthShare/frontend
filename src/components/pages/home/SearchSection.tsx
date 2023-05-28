@@ -37,7 +37,7 @@ export const SearchSection = () => {
       position="relative"
       w="100%"
     >
-      <Heading text="Search for torrents" />
+      <Heading text="Search and buy files" />
       <Grid templateColumns={"1fr auto auto auto"} mt="-5px" w="100%">
         {/* <InputGroup zIndex="10" w="70%" position="relative"> */}
         <CustomInput
@@ -46,7 +46,7 @@ export const SearchSection = () => {
             border: "1px solid rgba(255, 255, 255, 0.17) !important",
             outline: "none !important"
           }}
-          placeholder="Search in StealthShare"
+          placeholder="StealthShare search..."
           value={inputValue}
           onChange={(e: any) => handleInputChange(e)}
           onKeyDown={(e: any) => {
@@ -74,10 +74,10 @@ export const SearchSection = () => {
             </Button>
           </InputRightElement>
         </InputGroup> */}
-        <Grid gridTemplateColumns="1fr 1fr" h="100%">
+        <Grid gridTemplateColumns="auto auto" h="100%">
           <Select
             h="69px"
-            placeholder="Select category"
+            placeholder="Category"
             borderRadius="0"
             borderX="0"
             _focus={{
@@ -93,9 +93,9 @@ export const SearchSection = () => {
           </Select>
           <Select
             h="69px"
-            placeholder="Select tags"
+            placeholder="Tags"
             borderRadius="0"
- 
+             textIndent="10px" 
             _focus={{
               border: "1px solid rgba(255, 255, 255, 0.17) !important",
               outline: "none !important"
