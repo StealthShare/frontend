@@ -39,6 +39,7 @@ import { ERC20_ABI } from "../abi/erc20";
 import { MARKET_ABI } from "../abi/market";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import useLocalStorage from "use-local-storage";
 
 export const Cart = () => {
   const {
@@ -50,6 +51,12 @@ export const Cart = () => {
     removeOneByAddress
   } = useCartContext();
 
+  const [inventory, setInventory] = useLocalStorage<any>(
+    "inventory",
+    localStorage.getItem("inventory") !== null
+      ? localStorage.getItem("inventory")
+      : []
+  );
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -98,7 +105,9 @@ export const Cart = () => {
         onOpen();
 
         console.log(tokens);
-        console.log(amounts);
+        setInventory(
+          JSON.stringify([...inventory, { token: tokens, amount: amounts }])
+        );
       } catch (error) {
       } finally {
         setLoading(false);

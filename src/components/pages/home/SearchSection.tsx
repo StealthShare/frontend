@@ -8,14 +8,14 @@ import { CustomInput } from "../../shared/CustomInput";
 import { Heading } from "../../shared/Heading";
 
 export const SearchSection = () => {
-  const [inputValue, setInputValue] = useState<string>('');
-  const [categorySelect, setCategorySelect] = useState<string>('');
-  const [tagSelect, setTagSelect] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>("");
+  const [categorySelect, setCategorySelect] = useState<string>("");
+  const [tagSelect, setTagSelect] = useState<string>("");
 
   const [tags, setTags] = useState<string[]>([]);
 
   useEffect(() => {
-    setTagSelect('');
+    setTagSelect("");
     setTags((TAGS as any)[categorySelect] ?? []);
   }, [categorySelect]);
 
@@ -26,27 +26,35 @@ export const SearchSection = () => {
   };
 
   return (
-    <Flex flexDir="column" gap="25px" mt="40px" zIndex="10" position="relative" w="100%">
+    <Flex
+      flexDir="column"
+      gap="25px"
+      mt="40px"
+      zIndex="10"
+      position="relative"
+      w="100%"
+    >
       <Heading text="Search and buy files" />
-      <Grid templateColumns={'1fr auto auto auto'} mt="-5px" w="100%">
+      <Grid templateColumns={"1fr auto auto auto"} mt="-5px" w="100%">
         {/* <InputGroup zIndex="10" w="70%" position="relative"> */}
         <CustomInput
           w="auto"
           _focus={{
-            border: '1px solid rgba(255, 255, 255, 0.17) !important',
-            outline: 'none !important',
+            border: "1px solid rgba(255, 255, 255, 0.17) !important",
+            outline: "none !important"
           }}
           placeholder="StealthShare search..."
           value={inputValue}
           onChange={(e: any) => handleInputChange(e)}
           onKeyDown={(e: any) => {
-            console.log(e.key === 'Enter');
-            if (e.key === 'Enter' && (inputValue.length > 0 || categorySelect != ""))
-              navigate(
-                `/marketplace?search=${inputValue}${categorySelect !== '' ? `&category=${categorySelect}` : ''}${
-                  tagSelect !== '' ? `&tag=${tagSelect}` : ''
-                }`
-              );
+            console.log(e.key === "Enter");
+            if (
+              e.key === "Enter" &&
+              (inputValue.length > 0 || categorySelect != "")
+            ) {
+              localStorage.setItem("search", inputValue);
+              navigate("/marketplace");
+            }
           }}
           borderRightRadius="0"
         />
@@ -58,8 +66,8 @@ export const SearchSection = () => {
             borderRadius="0"
             borderX="0"
             _focus={{
-              borderY: '1px solid rgba(255, 255, 255, 0.17) !important',
-              outline: 'none !important',
+              borderY: "1px solid rgba(255, 255, 255, 0.17) !important",
+              outline: "none !important"
             }}
             onChange={(e: any) => setCategorySelect(e.target.value)}
             value={categorySelect}
@@ -75,8 +83,8 @@ export const SearchSection = () => {
             isDisabled={tags.length == 0}
             textIndent="10px"
             _focus={{
-              border: '1px solid rgba(255, 255, 255, 0.17) !important',
-              outline: 'none !important',
+              border: "1px solid rgba(255, 255, 255, 0.17) !important",
+              outline: "none !important"
             }}
             onChange={(e: any) => {
               setTagSelect(e.target.value);
