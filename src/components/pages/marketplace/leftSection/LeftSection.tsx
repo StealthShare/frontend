@@ -38,13 +38,7 @@ export const LeftSection: FC<ILeftSectionProps> = ({
   const handleInputChange = (e: any) => {
     if (listings) {
       setInputValue(e.target.value);
-      console.log(
-        listings
-          .map((listing: any) => listing.name)
-          .filter((name: string) => {
-            return name.includes(e.target.value);
-          })
-      );
+
       const matchingNames = listings
         .map((listing: any) => listing.name)
         .filter((name: string) => {
@@ -68,7 +62,6 @@ export const LeftSection: FC<ILeftSectionProps> = ({
         listings.filter((listing: any) => matchingNames.includes(listing.name))
       );
     } else {
-      console.log("No search");
       setFilteredListings(listings);
     }
   }, [search]);
@@ -84,7 +77,6 @@ export const LeftSection: FC<ILeftSectionProps> = ({
           defaultValue={search.get("search")}
           onChange={(e: any) => handleInputChange(e)}
           onKeyDown={(e: any) => {
-            console.log(e.key === "Enter");
             if (e.key === "Enter" && inputValue.length > 0)
               navigate(
                 `/${

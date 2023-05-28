@@ -11,8 +11,6 @@ export const NewestSection = () => {
   const { listings } = useListingContext();
 
   const reversedListings = Array.from(listings).reverse();
-  console.log("listings", listings);
-  console.log("reversed", reversedListings);
 
   return (
     <Flex flexDir="column" gap="30px" mt="20px" zIndex="1">

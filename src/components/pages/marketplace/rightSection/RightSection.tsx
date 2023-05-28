@@ -66,7 +66,6 @@ export const RightSection: FC<IRightSectionProps> = ({
     const temp = listings;
     const filteredByTag = temp.filter((listing: any) => {
       if (listing.tags) {
-        console.log(listing?.tags[0] === value);
         return listing?.tags[0] === value;
       }
     });
@@ -92,30 +91,6 @@ export const RightSection: FC<IRightSectionProps> = ({
       setFilteredListings(commonElements);
     } else setFilteredListings(filteredByPrice);
   };
-
-  // useEffect(() => {
-  //   if (
-  //     category.get("category") !== null ||
-  //     (minPrice !== "" && maxPrice !== "")
-  //   ) {
-  //     setActiveCategory(category.get("category")!);
-  //     const matchingPrices = filteredListings
-  //       .map((listing: any) => listing.price)
-  //       .filter((price: number) => {
-  //         return price >= +minPrice && price <= +maxPrice;
-  //       });
-  //     console.log("filtered", filteredListings);
-  //     console.log("prices", matchingPrices);
-  //     setFilteredListings(
-  //       filteredListings.filter((listing: any) => {
-  //         return matchingPrices === listing.price;
-  //       })
-  //     );
-  //   } else {
-  //     console.log("No search");
-  //     setFilteredListings(filteredListings);
-  //   }
-  // }, [category]);
 
   return (
     <Flex flexDir="column" gap="30px">

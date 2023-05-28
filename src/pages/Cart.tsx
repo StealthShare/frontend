@@ -68,12 +68,8 @@ export const Cart = () => {
           paymentToken
         );
         clearCart();
-        alert("accepted");
 
         await tx2.wait();
-
-        console.log(tokens);
-        console.log(amounts);
       } catch (error) {}
     }
   };

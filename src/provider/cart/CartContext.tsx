@@ -52,7 +52,6 @@ export const CartContextProvider = ({
   const [cartData, setCartData] = useLocalStorage<any[] | null>("CART", []);
 
   useEffect(() => {
-    console.log(cartData);
     var p = 0;
     cartData?.forEach((data: any) => {
       p += data.price * data.amount;
@@ -101,7 +100,6 @@ export const CartContextProvider = ({
 
   const removeOneByAddress = (address: string) => {
     const item = cartData!.filter((item) => item._id === address)[0];
-    console.log(item.amount);
 
     item.amount -= 1;
     setPrice((prevState) => prevState - item.price);
