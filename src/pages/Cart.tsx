@@ -29,7 +29,7 @@ import { NewestSection } from "../components/pages/home/newest/newestSection";
 import { LineContainer } from "../components/shared/containers/LineContainer";
 import { PageContainer } from "../components/shared/containers/PageContainer";
 import { Heading } from "../components/shared/Heading";
-import { MARKET_ADDRESS, USDC_TOKEN_ADDRESS } from "../constants";
+import { MARKET_ADDRESS, USDC_TOKEN_ADDRESS, USDT_TOKEN_ADDRESS } from "../constants";
 import { BookmarkIcon } from "../icons/BookmarkIcon";
 import { useCartContext } from "../provider/cart/CartContext";
 import { useUserContext } from "../provider/user/UserContext";
@@ -64,7 +64,7 @@ export const Cart = () => {
         const amounts = cartData.map((token) => {
           return token.amount;
         });
-        const paymentToken = USDC_TOKEN_ADDRESS;
+        const paymentToken = USDT_TOKEN_ADDRESS;
 
         const provider = new ethers.BrowserProvider((window as any).ethereum);
 
