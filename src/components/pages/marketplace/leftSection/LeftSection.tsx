@@ -16,18 +16,20 @@ import { SmallGridFile } from "../rightSection/SmallGridFile";
 interface ILeftSectionProps {
   activeGrid: string;
   download?: boolean;
-  placeholder: string
+  placeholder: string;
+  filteredListings: any;
+  setFilteredListings: any;
 }
 
 export const LeftSection: FC<ILeftSectionProps> = ({
   activeGrid,
   download = false,
-  placeholder
+  placeholder,
+  filteredListings,
+  setFilteredListings
 }) => {
-  const { listings } = useListingContext();
   const [inputValue, setInputValue] = useState<string>("");
-
-  const [filteredListings, setFilteredListings] = useState<any[]>(listings);
+  const { listings } = useListingContext();
 
   const [search, setSearch] = useSearchParams();
 
@@ -99,7 +101,7 @@ export const LeftSection: FC<ILeftSectionProps> = ({
       </InputGroup>
       {activeGrid === "big" && (
         <Grid gap="20px" flexWrap="wrap" templateColumns="repeat(3, 1fr)">
-          {filteredListings.map((item, index) => {
+          {filteredListings.map((item: any, index: number) => {
             return (
               <FileItem
                 key={item._id}

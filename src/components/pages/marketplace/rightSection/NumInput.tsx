@@ -5,7 +5,7 @@ interface INumInputProps {
   placeholder: string;
 }
 
-export const NumInput: FC<INumInputProps> = ({ placeholder }) => {
+export const NumInput = ({ ...props }) => {
   return (
     <Input
       variant="unstyled"
@@ -16,7 +16,7 @@ export const NumInput: FC<INumInputProps> = ({ placeholder }) => {
       bgColor="rgba(0, 0, 0, 0.25)"
       border="1px solid rgba(255, 255, 255, 0.17)"
       borderRadius="8px"
-      placeholder={placeholder}
+      placeholder={props.placeholder}
       _placeholder={{
         color: "#73767D",
         fontFamily: "Inter",
@@ -30,6 +30,7 @@ export const NumInput: FC<INumInputProps> = ({ placeholder }) => {
         outline: "none !important",
         border: "1px solid rgba(255, 255, 255, 0.17)"
       }}
+      {...props}
     ></Input>
   );
 };
