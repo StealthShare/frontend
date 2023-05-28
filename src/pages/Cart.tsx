@@ -40,6 +40,7 @@ import { MARKET_ABI } from "../abi/market";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useLocalStorage from "use-local-storage";
+import { fileSizeFormatter } from "../utils/fileSizeFormatter";
 
 export const Cart = () => {
   const {
@@ -232,7 +233,7 @@ export const Cart = () => {
                             gap="10px"
                           >
                             <Image src="/assets/icons/hard-drive.svg" />{" "}
-                            {item.size + " GB"}
+                            {fileSizeFormatter(item.size)}
                           </Flex>
                         </Flex>
                         <Flex align="center" gap="50px">
