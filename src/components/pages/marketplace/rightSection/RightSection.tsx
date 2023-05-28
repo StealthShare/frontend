@@ -28,6 +28,7 @@ import { NumInput } from "./NumInput";
 import { FILE_TYPES, TAGS } from "../../../../constants/tags";
 import { HeadingSmall } from "../../../shared/HeadingSmall";
 import { currencyFormatter } from "../../../../utils/currencyFormatter";
+import useLocalStorage from "use-local-storage";
 
 interface IRightSectionProps {
   activeGrid: string;
@@ -46,50 +47,64 @@ export const RightSection: FC<IRightSectionProps> = ({
   const [sliderMin, setSliderMin] = useState(0);
   const [sliderMax, setSliderMax] = useState(10);
   const [activeTag, setActiveTag] = useState<string>("");
-  const [category, setCategory] = useSearchParams();
   const navigate = useNavigate();
-  const tag = category.get("tag");
-  const search = category.get("search") ?? "";
-  const cat = category.get("category") ?? "";
-  const [minPrice, setMinPrice] = useState<number>(0);
-  const [maxPrice, setMaxPrice] = useState<number>(10);
+  // const [minPrice, setMinPrice] = useState<number>(0);
+  // const [maxPrice, setMaxPrice] = useState<number>(100);
   const { listings } = useListingContext();
   var maxValue = 0;
+
+  const [tags, setTags] = useLocalStorage<string[]>("tags", []);
+  const [category, setCategory] = useLocalStorage<string>("category", "");
+  const [search, setSearch] = useLocalStorage<string>("search", "");
+  const [min, setMin] = useLocalStorage<number>("min", 0);
+  const [max, setMax] = useLocalStorage<number>("max", 100);
 
   listings.forEach((listing: any) => {
     if (listing.price > maxValue) maxValue = listing.price;
   });
 
+  useEffect(() => {
+    setFilteredListings(
+      listings.filter((listing: any) => {
+        return (
+          //search.includes(listing.name) &&
+          // listing.price >= min &&
+          // listing.price <= min &&
+          listing.name.includes(search) && listing?.tags?.includes([...tags])
+        );
+      })
+    );
+  }, []);
+
   const handleTagChange = (value: string) => {
     setActiveTag(value);
-    //navigate(`/marketplace?${search ? `search=${search}` : ""}&tags=${value}`);
+    setTags([value]);
     const temp = listings;
     const filteredByTag = temp.filter((listing: any) => {
       if (listing.tags) {
-        return listing?.tags[0] === value;
+        return (
+          // listing.price >= min &&
+          // listing.price <= min &&
+          listing.name.includes(search) && listing?.tags?.includes([value])
+        );
       }
     });
-    if (category.get("search") !== "") {
-      const commonElements = filteredByTag.filter((element: any) => {
-        return element.name.includes(category.get("search"));
-      });
-      setFilteredListings(commonElements);
-    }
+    console.log(filteredByTag);
+    setFilteredListings(filteredByTag);
   };
 
   const handlePriceChange = (e: any) => {
-    setSliderMin(e[0]);
-    setSliderMax(e[1]);
     const temp = listings;
     const filteredByPrice = temp.filter((listing: any) => {
-      return listing.price >= e[0] && listing.price <= e[1];
+      return (
+        // listing.price >= e[0] &&
+        // listing.price <= e[1] &&
+        listing.name.includes(search)
+        //listing?.tags?.includes(tags])
+      );
     });
-    if (search) {
-      const commonElements = filteredByPrice.filter((element: any) => {
-        return element.name.includes(category.get("search"));
-      });
-      setFilteredListings(commonElements);
-    } else setFilteredListings(filteredByPrice);
+
+    setFilteredListings(filteredByPrice);
   };
 
   return (
@@ -150,9 +165,7 @@ export const RightSection: FC<IRightSectionProps> = ({
                     color={activeCategory === "All" ? "brandPrimary" : ""}
                     onClick={() => {
                       setActiveCategory("All");
-                      navigate(
-                        `/marketplace?search=${search}&category=${"All"}&tags=${"All"}`
-                      );
+                      setCategory("All");
                     }}
                   >
                     All
@@ -167,8 +180,15 @@ export const RightSection: FC<IRightSectionProps> = ({
                       flex="1"
                       textAlign="left"
                       _hover={{ color: "brandPrimary" }}
-                      color={activeCategory === category ? "brandPrimary" : ""}
-                      onClick={() => setActiveCategory(category)}
+                      color={
+                        localStorage.getItem("category") === category
+                          ? "brandPrimary"
+                          : ""
+                      }
+                      onClick={() => {
+                        setActiveCategory(category);
+                        setCategory(category);
+                      }}
                     >
                       {category}
                     </Box>
@@ -185,7 +205,7 @@ export const RightSection: FC<IRightSectionProps> = ({
                     <CategoryItem
                       key={"All"}
                       text={"All"}
-                      active={activeTag === "All"}
+                      active={tags.includes("All")}
                       onClick={() => {
                         handleTagChange("All");
                       }}
@@ -194,7 +214,7 @@ export const RightSection: FC<IRightSectionProps> = ({
                       <CategoryItem
                         key={value}
                         text={value}
-                        active={activeTag === value}
+                        active={tags.includes(value)}
                         onClick={() => {
                           handleTagChange(value);
                         }}
@@ -207,42 +227,22 @@ export const RightSection: FC<IRightSectionProps> = ({
           </Flex>
         </Flex>
         <Flex my="30px" flexDir="column" gap="8px">
-          {/* <Flex align="center" gap="11px" justify="space-between">
-            <NumInput
-              placeholder="min"
-              value={minPrice}
-              onChange={(e: any) => {
-                setMinPrice(e.target.value);
-              }}
-              type="number"
-            />
-            <Text
-              fontFamily="Inter"
-              fontSize="12px"
-              fontWeight="300"
-              color="#73767D"
-            >
-              to
-            </Text>
-            <NumInput
-              placeholder="max"
-              value={maxPrice}
-              onChange={(e: any) => {
-                setMaxPrice(e.target.value);
-              }}
-              type="number"
-            />
-          </Flex> */}
           <HeadingSmall
-            text={`Price: ${currencyFormatter(sliderMin)} - ${currencyFormatter(
-              sliderMax
+            text={`Price: ${currencyFormatter(min)} - ${currencyFormatter(
+              max
             )}`}
           />
           <RangeSlider
             aria-label={["min", "max"]}
-            defaultValue={[10, 30]}
-            value={[sliderMin, sliderMax]}
+            defaultValue={[min, max]}
+            value={[min, max]}
             onChange={(e: any) => {
+              setSliderMin(e[0]);
+              setSliderMax(e[1]);
+              setMin(e[0]);
+              setMax(e[1]);
+            }}
+            onDragEnd={(e: any) => {
               handlePriceChange(e);
             }}
             max={maxValue}

@@ -7,6 +7,7 @@ import {
 } from "@chakra-ui/react";
 import React, { FC, useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import useLocalStorage from "use-local-storage";
 import { SearchIcon } from "../../../../icons/SearchIcon";
 import { useListingContext } from "../../../../provider/listings/ListingsContext";
 import { CustomInput } from "../../../shared/CustomInput";
@@ -31,32 +32,81 @@ export const LeftSection: FC<ILeftSectionProps> = ({
   const [inputValue, setInputValue] = useState<string>("");
   const { listings } = useListingContext();
 
-  const [search, setSearch] = useSearchParams();
+  //const [search, setSearch] = useSearchParams();
+  const [tags, setTags] = useLocalStorage<string>(
+    "tags",
+    localStorage.getItem("tags") !== null ? localStorage.getItem("tags")! : ""
+  );
+  const [category, setCategory] = useLocalStorage<string>(
+    "category",
+    localStorage.getItem("category") !== null
+      ? localStorage.getItem("category")!
+      : ""
+  );
+  const [search, setSearch] = useLocalStorage<string>(
+    "search",
+    localStorage.getItem("search") !== null
+      ? localStorage.getItem("search")!
+      : ""
+  );
+  const [min, setMin] = useLocalStorage<number>(
+    "min",
+    localStorage.getItem("min") !== null ? +localStorage.getItem("min")! : 0
+  );
+  const [max, setMax] = useLocalStorage<number>(
+    "max",
+    localStorage.getItem("max") !== null ? +localStorage.getItem("max")! : 30
+  );
+
+  useEffect(() => {
+    if (listings) {
+      setInputValue(search);
+
+      const matchingNames = listings
+        .map((listing: any) => listing.name)
+        .filter((name: string) => {
+          return name.includes(search);
+        });
+      setFilteredListings(
+        listings.filter(
+          (listing: any) =>
+            matchingNames.includes(listing.name) &&
+            min <= listing.price &&
+            max >= listing.price
+        )
+      );
+    }
+  }, [min, max, search]);
 
   const navigate = useNavigate();
 
   const handleInputChange = (e: any) => {
-    if (listings) {
-      setInputValue(e.target.value);
+    setInputValue(e.target.value);
+    setSearch(e.target.value);
 
-      const matchingNames = listings
-        .map((listing: any) => listing.name)
-        .filter((name: string) => {
-          return name.includes(e.target.value);
-        });
-      setFilteredListings(
-        listings.filter((listing: any) => matchingNames.includes(listing.name))
-      );
-    }
+    var pom = listings;
+    const matchingNames = pom
+      .map((listing: any) => listing.name)
+      .filter((name: string) => {
+        return name.includes(e.target.value);
+      });
+
+    setFilteredListings(
+      pom.filter((listing: any) => {
+        const priceCheck = min <= listing.price && max >= listing.price;
+        const tagsCheck = listing?.tags?.includes(tags);
+        return matchingNames.includes(listing.name) && priceCheck && tagsCheck;
+      })
+    );
   };
 
   useEffect(() => {
-    if (search.get("search") !== null) {
-      setInputValue(search.get("search")!);
+    if (search !== "") {
+      setInputValue(search);
       const matchingNames = listings
         .map((listing: any) => listing.name)
         .filter((name: string) => {
-          return name.includes(search.get("search") as string);
+          return name.includes(search);
         });
       setFilteredListings(
         listings.filter((listing: any) => matchingNames.includes(listing.name))
@@ -68,35 +118,20 @@ export const LeftSection: FC<ILeftSectionProps> = ({
 
   return (
     <Flex flexDir="column" gap="30px">
-      {/* <InputGroup> */}
       <Flex>
         <CustomInput
           borderRightRadius="0"
           placeholder={placeholder}
           value={inputValue}
-          defaultValue={search.get("search")}
+          defaultValue={search}
           onChange={(e: any) => handleInputChange(e)}
-          onKeyDown={(e: any) => {
-            if (e.key === "Enter" && inputValue.length > 0)
-              navigate(
-                `/${
-                  download ? "inventory" : "marketplace"
-                }?search=${inputValue}`
-              );
-          }}
+          onKeyDown={(e: any) => {}}
         />
         <Button
           borderRightRadius="8px"
           borderLeftRadius="0"
           boxSize="69px"
-          onClick={() => {
-            if (inputValue.length > 0)
-              navigate(
-                `/${
-                  download ? "inventory" : "marketplace"
-                }?search=${inputValue}`
-              );
-          }}
+          onClick={() => {}}
         >
           <SearchIcon />
         </Button>

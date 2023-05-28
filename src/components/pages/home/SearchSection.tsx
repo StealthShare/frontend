@@ -39,12 +39,10 @@ export const SearchSection = () => {
           value={inputValue}
           onChange={(e: any) => handleInputChange(e)}
           onKeyDown={(e: any) => {
-            if (e.key === "Enter" && inputValue.length > 0)
-              navigate(
-                `/marketplace?search=${inputValue}${
-                  categorySelect !== "" ? `&category=${categorySelect}` : ""
-                }${tagSelect !== "" ? `&tag=${tagSelect}` : ""}`
-              );
+            if (e.key === "Enter" && inputValue.length > 0) {
+              localStorage.setItem("search", inputValue);
+              navigate("/marketplace");
+            }
           }}
           borderRightRadius="0"
         />
@@ -90,12 +88,14 @@ export const SearchSection = () => {
           borderLeftRadius="0"
           boxSize="69px"
           onClick={() => {
-            if (inputValue.length > 0)
-              navigate(
-                `/marketplace?search=${inputValue}${
-                  categorySelect !== "" ? `&category=${categorySelect}` : ""
-                }${tagSelect !== "" ? `&tag=${tagSelect}` : ""}`
-              );
+            localStorage.setItem("search", inputValue);
+            navigate("/marketplace");
+            // if (inputValue.length > 0)
+            //   navigate(
+            //     `/marketplace?search=${inputValue}${
+            //       categorySelect !== "" ? `&category=${categorySelect}` : ""
+            //     }${tagSelect !== "" ? `&tag=${tagSelect}` : ""}`
+            //   );
           }}
         >
           <SearchIcon />
