@@ -219,7 +219,7 @@ export const Cart = () => {
               </Flex>
               <Flex mt="40px" mb="100px" justifyContent="flex-end">
                 <Flex gap="30px" flexDir="column">
-                  <Flex justifyContent="space-between">
+                  <Flex justifyContent="space-between" align="center">
                     <Box fontFamily="Inter">Total: </Box>
                     <Box fontWeight="bold" fontSize="20px">
                       {currencyFormatter(price)}
