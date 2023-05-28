@@ -1,14 +1,34 @@
-import { Box, Button, Flex, Grid, Select, Text } from '@chakra-ui/react';
-import React, { FC, useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { categories } from '../../../../constants/categories';
-import { GridBigIcon } from '../../../../icons/GridBigIcon';
-import { GridSmallIcon } from '../../../../icons/GridSmallIcon';
-import { useListingContext } from '../../../../provider/listings/ListingsContext';
-import { CustomInput } from '../../../shared/CustomInput';
-import { CustomSelect } from '../../../shared/CustomSelect';
-import { CategoryItem } from './CategoryItem';
-import { NumInput } from './NumInput';
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Button,
+  Flex,
+  Grid,
+  RangeSlider,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
+  RangeSliderTrack,
+  Select,
+  Text
+} from "@chakra-ui/react";
+import React, { FC, useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { categories } from "../../../../constants/categories";
+import { GridBigIcon } from "../../../../icons/GridBigIcon";
+import { GridSmallIcon } from "../../../../icons/GridSmallIcon";
+import { useListingContext } from "../../../../provider/listings/ListingsContext";
+import { CustomInput } from "../../../shared/CustomInput";
+import { CustomSelect } from "../../../shared/CustomSelect";
+import { CategoryItem } from "./CategoryItem";
+import { NumInput } from "./NumInput";
+import { FILE_TYPES, TAGS } from "../../../../constants/tags";
+import { HeadingSmall } from "../../../shared/HeadingSmall";
+import { currencyFormatter } from "../../../../utils/currencyFormatter";
+import useLocalStorage from "use-local-storage";
 
 interface IRightSectionProps {
   activeGrid: string;
@@ -23,39 +43,69 @@ export const RightSection: FC<IRightSectionProps> = ({
   filteredListings,
   setFilteredListings
 }) => {
-  const [activeCategory, setActiveCategory] = useState<string>("all");
-  const [category, setCategory] = useSearchParams();
+  const [activeCategory, setActiveCategory] = useState<string>("All");
+  const [sliderMin, setSliderMin] = useState(0);
+  const [sliderMax, setSliderMax] = useState(10);
+  const [activeTag, setActiveTag] = useState<string>("");
   const navigate = useNavigate();
-  const tag = category.get("tag");
-  const search = category.get("search") ?? "";
-  const cat = category.get("category") ?? "";
-  const [minPrice, setMinPrice] = useState<string>("");
-  const [maxPrice, setMaxPrice] = useState<string>("");
+  // const [minPrice, setMinPrice] = useState<number>(0);
+  // const [maxPrice, setMaxPrice] = useState<number>(100);
   const { listings } = useListingContext();
+  var maxValue = 0;
+
+  const [tags, setTags] = useLocalStorage<string[]>("tags", []);
+  const [category, setCategory] = useLocalStorage<string>("category", "");
+  const [search, setSearch] = useLocalStorage<string>("search", "");
+  const [min, setMin] = useLocalStorage<number>("min", 0);
+  const [max, setMax] = useLocalStorage<number>("max", 100);
+
+  listings.forEach((listing: any) => {
+    if (listing.price > maxValue) maxValue = listing.price;
+  });
 
   useEffect(() => {
-    if (
-      category.get("category") !== null ||
-      (minPrice !== "" && maxPrice !== "")
-    ) {
-      setActiveCategory(category.get("category")!);
-      const matchingPrices = filteredListings
-        .map((listing: any) => listing.price)
-        .filter((price: number) => {
-          return price >= +minPrice && price <= +maxPrice;
-        });
-      console.log("filtered", filteredListings);
-      console.log("prices", matchingPrices);
-      setFilteredListings(
-        filteredListings.filter((listing: any) => {
-          return matchingPrices === listing.price;
-        })
+    setFilteredListings(
+      listings.filter((listing: any) => {
+        return (
+          //search.includes(listing.name) &&
+          // listing.price >= min &&
+          // listing.price <= min &&
+          listing.name.includes(search) && listing?.tags?.includes([...tags])
+        );
+      })
+    );
+  }, []);
+
+  const handleTagChange = (value: string) => {
+    setActiveTag(value);
+    setTags([value]);
+    const temp = listings;
+    const filteredByTag = temp.filter((listing: any) => {
+      if (listing.tags) {
+        return (
+          // listing.price >= min &&
+          // listing.price <= min &&
+          listing.name.includes(search) && listing?.tags?.includes([value])
+        );
+      }
+    });
+    console.log(filteredByTag);
+    setFilteredListings(filteredByTag);
+  };
+
+  const handlePriceChange = (e: any) => {
+    const temp = listings;
+    const filteredByPrice = temp.filter((listing: any) => {
+      return (
+        // listing.price >= e[0] &&
+        // listing.price <= e[1] &&
+        listing.name.includes(search)
+        //listing?.tags?.includes(tags])
       );
-    } else {
-      console.log("No search");
-      setFilteredListings(filteredListings);
-    }
-  }, [category]);
+    });
+
+    setFilteredListings(filteredByPrice);
+  };
 
   return (
     <Flex flexDir="column" gap="30px">
@@ -71,20 +121,25 @@ export const RightSection: FC<IRightSectionProps> = ({
             templateColumns="1fr 1fr"
             alignItems="center"
           >
-            <Flex justify="center" borderRight="1px solid rgba(255,255,255,0.2)" align="center" boxSize="71px">
+            <Flex
+              justify="center"
+              borderRight="1px solid rgba(255,255,255,0.2)"
+              align="center"
+              boxSize="71px"
+            >
               <GridBigIcon
                 boxSize="20px"
                 cursor="pointer"
-                color={activeGrid === 'big' ? 'white' : '#73767D'}
-                onClick={() => setActiveGrid('big')}
+                color={activeGrid === "big" ? "white" : "#73767D"}
+                onClick={() => setActiveGrid("big")}
               />
             </Flex>
             <Flex justify="center" align="center" boxSize="71px">
               <GridSmallIcon
                 boxSize="20px"
                 cursor="pointer"
-                color={activeGrid === 'small' ? 'white' : '#73767D'}
-                onClick={() => setActiveGrid('small')}
+                color={activeGrid === "small" ? "white" : "#73767D"}
+                onClick={() => setActiveGrid("small")}
               />
             </Flex>
           </Grid>
@@ -92,73 +147,114 @@ export const RightSection: FC<IRightSectionProps> = ({
         </Flex>
         <Box mt="20px" h="1px" w="100%" bgColor="rgba(255,255,255,0.2)" />
         <Flex flexDir="column" gap="30px" maxH="300px" overflowY="scroll">
-          <Flex flexDir="column" my="12px" gap="8px" fontFamily="Inter" fontSize="16px">
-            {categories.map((category: any) => (
-              <CategoryItem
-                key={category.value}
-                text={category.text}
-                active={activeCategory === category.value}
-                onClick={() => {
-                  setActiveCategory(category.value);
-                  navigate(`/marketplace?search=${search}&category=${category.value}&tags=${tag}`);
-                }}
-              />
-            ))}
+          <Flex
+            flexDir="column"
+            my="12px"
+            gap="8px"
+            fontFamily="Inter"
+            fontSize="16px"
+          >
+            <Accordion p="0" mt="-15px">
+              <AccordionItem border="none" mb="-6px" transitionDuration="0">
+                <AccordionButton>
+                  <Box
+                    as="span"
+                    flex="1"
+                    textAlign="left"
+                    _hover={{ color: "brandPrimary" }}
+                    color={activeCategory === "All" ? "brandPrimary" : ""}
+                    onClick={() => {
+                      setActiveCategory("All");
+                      setCategory("All");
+                    }}
+                  >
+                    All
+                  </Box>
+                </AccordionButton>
+              </AccordionItem>
+              {FILE_TYPES.map((category: any) => (
+                <AccordionItem border="none" mb="-6px" transitionDuration="0">
+                  <AccordionButton>
+                    <Box
+                      as="span"
+                      flex="1"
+                      textAlign="left"
+                      _hover={{ color: "brandPrimary" }}
+                      color={
+                        localStorage.getItem("category") === category
+                          ? "brandPrimary"
+                          : ""
+                      }
+                      onClick={() => {
+                        setActiveCategory(category);
+                        setCategory(category);
+                      }}
+                    >
+                      {category}
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                  <AccordionPanel
+                    pb={4}
+                    gap="8px"
+                    display="flex"
+                    flexDirection="column"
+                    ml="10px"
+                    mt="-7px"
+                  >
+                    <CategoryItem
+                      key={"All"}
+                      text={"All"}
+                      active={tags.includes("All")}
+                      onClick={() => {
+                        handleTagChange("All");
+                      }}
+                    />
+                    {(TAGS as any)[category].map((value: string) => (
+                      <CategoryItem
+                        key={value}
+                        text={value}
+                        active={tags.includes(value)}
+                        onClick={() => {
+                          handleTagChange(value);
+                        }}
+                      />
+                    ))}
+                  </AccordionPanel>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </Flex>
         </Flex>
-        <Flex flexDir="column">
-          <Flex align="center" gap="11px" justify="space-between">
-            <NumInput
-              placeholder="min"
-              value={minPrice}
-              onChange={(e: any) => {
-                setMinPrice(e.target.value);
-              }}
-              type="number"
-            />
-            <Text
-              fontFamily="Inter"
-              fontSize="12px"
-              fontWeight="300"
-              color="#73767D"
-            >
-              to
-            </Text>
-            <NumInput
-              placeholder="max"
-              value={maxPrice}
-              onChange={(e: any) => {
-                setMaxPrice(e.target.value);
-              }}
-              type="number"
-            />
-          </Flex>
+        <Flex my="30px" flexDir="column" gap="8px">
+          <HeadingSmall
+            text={`Price: ${currencyFormatter(min)} - ${currencyFormatter(
+              max
+            )}`}
+          />
+          <RangeSlider
+            aria-label={["min", "max"]}
+            defaultValue={[min, max]}
+            value={[min, max]}
+            onChange={(e: any) => {
+              setSliderMin(e[0]);
+              setSliderMax(e[1]);
+              setMin(e[0]);
+              setMax(e[1]);
+            }}
+            onDragEnd={(e: any) => {
+              handlePriceChange(e);
+            }}
+            max={maxValue}
+            min={0}
+          >
+            <RangeSliderTrack>
+              <RangeSliderFilledTrack bgColor="brandPrimary" />
+            </RangeSliderTrack>
+            <RangeSliderThumb index={0} />
+            <RangeSliderThumb index={1} />
+          </RangeSlider>
         </Flex>
-        <Button
-          onClick={() => {
-            const matchingPrices = filteredListings
-              .map((listing: any) => listing.price)
-              .filter((price: number) => {
-                return price >= +minPrice && price <= +maxPrice;
-              });
-            console.log("filtered", filteredListings);
-            console.log("prices", matchingPrices);
-            setFilteredListings(
-              filteredListings.filter((listing: any) => {
-                return matchingPrices === listing.price;
-              })
-            );
-            navigate(
-              `/marketplace?search=${search}${
-                cat !== null ? `&category=${cat}` : ""
-              }${tag !== null ? `&tag=${tag}` : ""}${
-                minPrice !== "" ? `&min=${minPrice}` : ""
-              }${maxPrice !== "" ? `&max=${maxPrice}` : ""}`
-            );
-          }}
-        >
-          Apply
-        </Button>
       </Flex>
     </Flex>
   );

@@ -12,8 +12,8 @@ interface IListing {
   image: string;
   description: string;
   size: number;
-  type: string,
-  tags: string[]
+  type: string;
+  tags: string[];
 }
 
 interface IListingContext {
@@ -37,11 +37,8 @@ export const ListingContextProvider = ({
   const [loading, setLoading] = useState<boolean>(false);
   const getListings = async () => {
     setLoading(true);
-    console.log(true);
     const res = await axios.get(`${API_URL}/listings`);
     setLoading(false);
-    console.log(false);
-    console.log(res.data.listings);
     if (res.status === 200) setListings(res.data.listings);
   };
 

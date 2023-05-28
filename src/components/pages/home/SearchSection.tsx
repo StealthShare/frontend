@@ -1,13 +1,11 @@
-import { Button, Checkbox, Flex, Grid, Input, InputGroup, InputRightElement, Select, Text } from '@chakra-ui/react';
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { categories } from '../../../constants/categories';
-import { FILE_TYPES, TAGS } from '../../../constants/tags';
-import { SearchIcon } from '../../../icons/SearchIcon';
-import { useListingContext } from '../../../provider/listings/ListingsContext';
-import { CustomInput } from '../../shared/CustomInput';
-import { Heading } from '../../shared/Heading';
+import { Button, Flex, Grid, Select } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { categories } from "../../../constants/categories";
+import { FILE_TYPES, TAGS } from "../../../constants/tags";
+import { SearchIcon } from "../../../icons/SearchIcon";
+import { CustomInput } from "../../shared/CustomInput";
+import { Heading } from "../../shared/Heading";
 
 export const SearchSection = () => {
   const [inputValue, setInputValue] = useState<string>('');
@@ -52,20 +50,7 @@ export const SearchSection = () => {
           }}
           borderRightRadius="0"
         />
-        {/* <InputRightElement h="100%">
-            <Button
-              mr="16px"
-              borderRadius="50%"
-              bg="rgba(186, 116, 248, 0.5)"
-              onClick={() => {
-                if (inputValue.length > 0)
-                  navigate(`/marketplace?search=${inputValue}`);
-              }}
-            >
-              <SearchIcon />
-            </Button>
-          </InputRightElement>
-        </InputGroup> */}
+
         <Grid gridTemplateColumns="auto auto" h="100%">
           <Select
             h="69px"
@@ -108,12 +93,14 @@ export const SearchSection = () => {
           borderLeftRadius="0"
           boxSize="69px"
           onClick={() => {
-            if ((inputValue.length > 0 || categorySelect != ""))
-              navigate(
-                `/marketplace?search=${inputValue}${categorySelect !== '' ? `&category=${categorySelect}` : ''}${
-                  tagSelect !== '' ? `&tag=${tagSelect}` : ''
-                }`
-              );
+            localStorage.setItem("search", inputValue);
+            navigate("/marketplace");
+            // if (inputValue.length > 0)
+            //   navigate(
+            //     `/marketplace?search=${inputValue}${
+            //       categorySelect !== "" ? `&category=${categorySelect}` : ""
+            //     }${tagSelect !== "" ? `&tag=${tagSelect}` : ""}`
+            //   );
           }}
         >
           <SearchIcon />

@@ -55,6 +55,7 @@ export const Cart = () => {
 
         await tx.wait();
 
+<<<<<<< HEAD
         const marketContract = new ethers.Contract(MARKET_ADDRESS, MARKET_ABI, singer);
 
         const tx2 = await marketContract.buyToken(tokens, amounts, paymentToken);
@@ -70,6 +71,23 @@ export const Cart = () => {
       } catch (error) {} finally {
         setLoading(false)
       }
+=======
+        const marketContract = new ethers.Contract(
+          MARKET_ADDRESS,
+          MARKET_ABI,
+          singer
+        );
+
+        const tx2 = await marketContract.buyToken(
+          tokens,
+          amounts,
+          paymentToken
+        );
+        clearCart();
+
+        await tx2.wait();
+      } catch (error) {}
+>>>>>>> e5fe3d1f722baca6fb2d53a2626ae78b3c69f3d4
     }
   };
 
@@ -126,19 +144,22 @@ export const Cart = () => {
                       borderBottom={index == cartData.length - 1 ? 'none' : '1px solid'}
                       borderColor="rgba(255, 255, 255, 0.2)"
                       padding="32px 33px 40px 33px"
+                      key={item._id}
                     >
                       <Box w="80px" h="80px" borderRadius="4px" bgImage={item.imageUrl} bgPos="center" bgSize="cover" />
                       <Flex justifyContent="space-between">
                         <Flex flexDir="column" gap="4px" justify="center">
                           <Flex
+                            justify="center"
                             align="center"
-                            textTransform="uppercase"
+                            borderRadius="2px"
+                            paddingX="6px"
                             fontSize="12px"
+                            fontWeight="500"
+                            bgColor="brandPrimary"
                             fontFamily="Inter"
-                            color="rgba(148, 150, 175, 1)"
-                            gap="10px"
                           >
-                            <BookmarkIcon /> {item.category}
+                            {item.type}
                           </Flex>
                           <Box fontFamily="Inter" fontSize="18px">
                             {item.name}

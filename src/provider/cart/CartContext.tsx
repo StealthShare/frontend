@@ -33,7 +33,7 @@ export interface CartItem {
   amount: number;
   address: string;
   imageUrl: string;
-  category: string;
+  type: string;
   name: string;
   price: number;
   size: number;
@@ -52,7 +52,6 @@ export const CartContextProvider = ({
   const [cartData, setCartData] = useLocalStorage<any[] | null>("CART", []);
 
   useEffect(() => {
-    console.log(cartData);
     var p = 0;
     cartData?.forEach((data: any) => {
       p += data.price * data.amount;
@@ -89,19 +88,18 @@ export const CartContextProvider = ({
   };
 
   const deleteItemByAddress = (address: string) => {
-    if (cartData?.length == 1) {
+    if (cartData?.length === 1) {
       setCartData(null);
       setPrice(0);
     } else {
       const item = cartData?.filter((item) => item._id === address)[0];
-      setCartData(cartData?.filter((item) => item !== address));
+      setCartData(cartData?.filter((item) => item._id !== address));
       setPrice((prevState) => prevState - item.price * item.amount);
     }
   };
 
   const removeOneByAddress = (address: string) => {
     const item = cartData!.filter((item) => item._id === address)[0];
-    console.log(item.amount);
 
     item.amount -= 1;
     setPrice((prevState) => prevState - item.price);
