@@ -88,12 +88,12 @@ export const CartContextProvider = ({
   };
 
   const deleteItemByAddress = (address: string) => {
-    if (cartData?.length == 1) {
+    if (cartData?.length === 1) {
       setCartData(null);
       setPrice(0);
     } else {
       const item = cartData?.filter((item) => item._id === address)[0];
-      setCartData(cartData?.filter((item) => item !== address));
+      setCartData(cartData?.filter((item) => item._id !== address));
       setPrice((prevState) => prevState - item.price * item.amount);
     }
   };

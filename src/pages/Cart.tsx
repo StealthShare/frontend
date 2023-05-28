@@ -118,6 +118,7 @@ export const Cart = () => {
                       }
                       borderColor="rgba(255, 255, 255, 0.2)"
                       padding="32px 33px 40px 33px"
+                      key={item._id}
                     >
                       <Box
                         w="80px"

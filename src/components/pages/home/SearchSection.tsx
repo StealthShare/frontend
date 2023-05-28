@@ -1,19 +1,8 @@
-import {
-  Button,
-  Checkbox,
-  Flex,
-  Grid,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Select,
-  Text
-} from "@chakra-ui/react";
+import { Button, Flex, Grid, Select } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { categories } from "../../../constants/categories";
 import { SearchIcon } from "../../../icons/SearchIcon";
-import { useListingContext } from "../../../provider/listings/ListingsContext";
 import { CustomInput } from "../../shared/CustomInput";
 import { Heading } from "../../shared/Heading";
 
@@ -50,7 +39,6 @@ export const SearchSection = () => {
           value={inputValue}
           onChange={(e: any) => handleInputChange(e)}
           onKeyDown={(e: any) => {
-            console.log(e.key === "Enter");
             if (e.key === "Enter" && inputValue.length > 0)
               navigate(
                 `/marketplace?search=${inputValue}${
@@ -60,20 +48,7 @@ export const SearchSection = () => {
           }}
           borderRightRadius="0"
         />
-        {/* <InputRightElement h="100%">
-            <Button
-              mr="16px"
-              borderRadius="50%"
-              bg="rgba(186, 116, 248, 0.5)"
-              onClick={() => {
-                if (inputValue.length > 0)
-                  navigate(`/marketplace?search=${inputValue}`);
-              }}
-            >
-              <SearchIcon />
-            </Button>
-          </InputRightElement>
-        </InputGroup> */}
+
         <Grid gridTemplateColumns="auto auto" h="100%">
           <Select
             h="69px"
@@ -95,7 +70,7 @@ export const SearchSection = () => {
             h="69px"
             placeholder="Tags"
             borderRadius="0"
-             textIndent="10px" 
+            textIndent="10px"
             _focus={{
               border: "1px solid rgba(255, 255, 255, 0.17) !important",
               outline: "none !important"
